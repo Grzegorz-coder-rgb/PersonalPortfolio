@@ -1,0 +1,880 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:  "Roboto", sans-serif; /* Jeśli Poppins ma być domyślny, zmień na "Poppins" */
+}
+
+img {
+    max-width: 100%; /* Zapewnia, że obraz nie będzie szerszy niż jego kontener */
+    height: auto;   /* Utrzymuje proporcje obrazu */
+    display: block; /* Usuwa ewentualne dodatkowe miejsce pod obrazem */
+}
+li{
+    list-style-type: none;
+}
+
+body{
+    background: #000;
+    color: #fff;
+}
+
+a{
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+a:hover{
+    animation: fadeIn 0.3s forwards;
+    color: #5e3bee;
+    font-size: 2.3rem;
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  font-weight: 700;
+  background: #1c1f2b;
+  text-align: center;
+}
+
+nav ul li a{
+    position: relative;
+    padding-bottom: 0.75rem;
+    color: #fff !important;
+}
+
+nav ul li a:hover{
+  color: #5e3bee;
+  font-size: 1.4rem !important;
+}
+
+nav ul li a::after{
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #5e3bee;
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover::after{
+    /* Używasz animacji fadeIn zdefiniowanej na końcu, więc to jest poprawne, jeśli taka jest intencja */
+    animation: 0.3s fadeIn forwards;
+}
+
+nav ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    text-align: center;
+    margin: 2rem 0 2rem 0;
+}
+
+.container{
+    max-width: 1200px;
+    margin: auto;
+    padding: 5rem 2rem;
+}
+
+.btn{
+    font-size: 1rem;
+    color: #ccc;
+    padding: 1rem 1.5rem;
+    border-radius: 5px;
+    background-color: #0044ff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover{
+    border-radius: 10px;
+    border: 2px solid #fff;
+    padding: 1.5rem 2rem;
+}
+
+.blur{
+    position: absolute;
+    box-shadow: 0 0 1000px 50px #1d4ed8;
+    z-index: -2; /* Upewnienie się, że jest pod spodem */
+}
+
+header{
+    position: relative;
+    padding-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    gap: 2rem;
+}
+
+header .image img{
+    max-width: 600px;
+    margin: auto;
+}
+
+#about p{
+    font-size: 1.5rem;
+    width: 500px;
+}
+
+.card-1{
+    margin: 100px auto;
+    padding: 2em;
+    width: 600px;
+    min-height: 300px;
+    background: #1c1f2b;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    padding: 30px 50px; /* Ten padding nadpisuje poprzedni 'padding: 2em;' */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-1::after, .card-1::before{
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+  padding: 3px; /* Ten padding tworzy iluzję grubości ramki, jeśli tło elementu jest przezroczyste lub inne */
+  border-radius: 10px;
+  animation: spin 1s linear infinite; /* ***POPRAWKA: Dodano animację*** */
+}
+
+.card-1::before{
+  filter: blur(1.5rem);
+  opacity: 0.5;
+}
+
+.card-1 h1{
+    position: absolute;
+    top: -60px;
+    font-size: 3rem;
+}
+
+.card-1 h1::after{
+    content: "";
+    position: absolute;
+    top: 10%; 
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: #4d2add;
+    transition: all 0.3s ease
+}
+
+.card-1 h1:hover::after{
+    animation: 0.3s fadeIn forwards;
+}
+
+.card-1 h1:hover{
+    background-color: #5e3bee;
+    border-radius: 10px;
+    font-size: 3.5rem;
+    border: 2px solid #fff;
+    margin-top: -2rem;
+}
+
+.card-1 .btn{
+    margin-top: 2rem
+}
+
+.offers{
+    width: 1200px;
+    height: 1000px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem
+}
+
+.card h3,
+.card h4{
+    font-size: 2rem;
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+.card h4{
+    padding-bottom: 3rem;
+}
+
+.card .btn {
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: 0; /* lub np. 1rem dla estetyki */
+  top: unset;
+  position: relative;
+}
+
+.card {
+  margin: 0 auto;
+  padding: 2em;
+  width: 300px;
+  height: 400px; /* Ustalona wysokość */
+  background: #1c1f2b;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.card::after, .card::before{
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+  padding: 3px;
+  border-radius: 10px;
+  animation: 3s spin linear infinite;
+}
+
+.card::before{
+  filter: blur(1.5rem);
+  opacity: 0.5;
+}
+
+.header{
+    text-align: center;
+    font-size: 3rem;
+    padding-top: 10rem;
+}
+
+.sub-header {
+    margin: 50px -110px;
+    padding: 2em;
+    width: 600px;
+    min-height: 300px;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: #1c1f2b;
+    border-radius: 10px;
+    position: relative;
+    left: 40%;
+}
+
+.sub-header::after, .sub-header::before{
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+  padding: 10px; /* Ten padding tworzy iluzję grubości ramki */
+  border-radius: 10px;
+  animation: spin 1s linear infinite; /* ***POPRAWKA: Dodano animację*** */
+}
+.sub-header::before{
+  filter: blur(1.5rem);
+  opacity: 0.5;
+}
+
+.projects {
+    margin: 3rem auto;
+    padding: 2rem;
+    position: relative;
+    border-radius: 10px;
+    height: 1100px; 
+    max-width: 1200px;
+    background-color: #1a1f2b;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-around; 
+    align-items: center; 
+    gap: 2rem;
+}
+
+.projects::before, .projects::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 7px;
+    border-radius: 10px;
+    animation: spin 2s linear infinite;
+}
+
+.projects::before{
+  filter: blur(8rem);
+  opacity: 1;
+}
+
+.projects .project-grid .projects-top,
+.projects .project-grid .projects-bottom {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line if space is insufficient */
+    justify-content: center; /* Center the items within each row */
+    gap: 2rem; /* Space between individual project items */
+    flex-grow: 1;
+    margin-bottom: 2rem;
+}
+
+.projects .project-grid .project-item { /* Changed from projects-item to project-item to match HTML */
+    width: 250px; /* Increased width for better content display */
+    height: 400px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 10px;
+    position: relative;
+    padding: 1.5rem; /* Add padding inside the project item */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute content vertically */
+    align-items: flex-start; /* Align content to the start */
+    text-align: left; /* Align text to the left */
+}
+
+.projects .project-grid h3{
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem; /* Space between title and description */
+    background-color: #1c1f2b;
+    width: 200px;
+    height: 100px;
+    padding: 1rem;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+}
+
+.projects .project-grid h4{
+    font-size: 2rem;
+    margin-bottom: 0.5rem; /* Space between title and description */
+    color: #5e3bee;
+    width: 200px;
+    height: 100px;
+    padding: 1rem;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+}
+
+.projects .project-grid button{
+    position: relative;
+    left: 20%;
+}
+
+.feedback{
+    padding: 110px 85px;
+}
+
+.feedback .review{
+  font-size: 3rem;
+  background-color: #1c1f2b;
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+  border-radius: 10px;
+  position: relative;
+  font-weight: 900;
+}
+
+.feedback .review::after, .feedback .review::before{
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+  padding: 7px; /* Ten padding tworzy iluzję grubości ramki */
+  border-radius: 10px;
+  animation: spin 2s linear infinite; /* ***POPRAWKA: Dodano animację*** */
+}
+
+.feedback .customers-feedback{
+    font-size: 2rem;
+    font-weight: 600;
+    background-color: #1c1f2b;
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0 1rem;
+    border-radius: 10px;
+    position: relative;
+}
+
+.feedback .customers-feedback::before, .feedback .customers-feedback::after{
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+  padding: 7px; /* Ten padding tworzy iluzję grubości ramki */
+  border-radius: 10px;
+  animation: spin 2s linear infinite; /* ***POPRAWKA: Dodano animację*** */
+}
+
+.feedback .customers-feedback::before{
+  filter: blur(1.5rem);
+  opacity: 0.5;
+}
+
+
+.feedback .review::before{
+  filter: blur(1.5rem);
+  opacity: 0.5;
+}
+
+.feedback .customers{
+    margin-top: 5rem;
+    display: flex;
+    gap: 2rem;
+}
+
+.feedback .customers .item{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border: 2px solid #5e3bee;
+    border-radius: 10px;
+    padding: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.feedback .customers .item .rating{
+    color: #1eff00;
+    font-size: 2rem;
+}
+
+.feedback .customers .item:hover{
+    border-color: #5e3bee;
+}
+
+.feedback .customers .item p{
+    line-height: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.feedback .customers .item .user{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feedback .customers .item .user img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.feedback .customers .item .user h5{
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+
+.feedback .customers .item .user p{
+    font-size: 12px;
+}
+
+.feedback .customers .item #p2{
+    font-size: 5px !important;
+}
+
+.container {
+  padding: 5rem;
+  background-color: #1a1f2b;
+  margin: 0 auto;
+  max-width: 1200px; /* Rozważ użycie max-width dla lepszej responsywności */
+  display: flex;
+  gap: 2rem; /* Dodaje odstęp między kolumnami */
+  flex-wrap: wrap; /* Pozwala kolumnom zawijać się na mniejszych ekranach */
+  position: relative;
+}
+
+.container::after, .container::before{
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+  padding: 10px; /* Ten padding tworzy iluzję grubości ramki, jeśli tło elementu jest przezroczyste lub inne */
+  border-radius: 10px;
+  animation: spin 1s linear infinite; /* ***POPRAWKA: Dodano animację*** */
+}
+
+.container::before{
+  filter: blur(8rem);
+  opacity: 1;
+}
+
+.container .column {
+  flex-grow: 1; 
+  flex-basis: 200px; 
+ 
+}
+
+.container .column h4 {
+  margin-bottom: 1rem; /* Odstęp pod nagłówkiem H4 */
+}
+
+.container .column h4{
+  cursor: pointer;
+}
+
+
+.container .column > a { 
+  display: block;
+  margin-bottom: 0.5rem; /* Odstęp między linkami w kolumnie */
+}
+
+.container .column > a:hover{
+  font-size: 1.5rem !important;
+}
+
+.container .column .socials{
+  font-size: 2rem;
+}
+
+footer .copyright{
+  position: absolute;
+  left: 34%;
+  top: 20rem;
+}
+
+footer .copyright:hover{
+  cursor: pointer;
+  color: #5e3bee;
+  background-color: #000;
+}
+
+@keyframes spin{
+  from{
+    --angle: 0deg;
+  }
+  to{
+    --angle: 360deg;
+  }
+}
+
+@keyframes fadeIn{
+  from{
+    width: 20%;
+  }
+
+  to{
+    width: 75%;
+  }
+}
+
+/* === MEDIA QUERIES === */
+
+/* Dla ekranów mniejszych niż 1024px (tablety w orientacji poziomej, małe laptopy) */
+@media (max-width: 1024px) {
+    .container {
+        padding: 4rem 1.5rem; /* Zmniejszenie paddingu kontenera */
+    }
+
+    header {
+        grid-template-columns: 1fr; /* Układ jednokolumnowy dla nagłówka */
+        text-align: center; /* Wyśrodkowanie tekstu w nagłówku */
+    }
+
+    header .image {
+        order: -1; /* Przeniesienie obrazu nad tekst, jeśli tak wolisz */
+        margin-bottom: 2rem;
+    }
+
+    header .image img {
+        margin: auto; /* Wyśrodkowanie obrazu */
+    }
+
+    #about p {
+        width: 90%; /* Użycie procentowej szerokości */
+        margin: 0 auto; /* Wyśrodkowanie */
+        font-size: 1.3rem;
+    }
+
+    .card-1 {
+        width: 90%; /* Użycie procentowej szerokości */
+        max-width: 500px; /* Ograniczenie maksymalnej szerokości */
+        padding: 20px 30px;
+    }
+    
+    .card-1 h1 {
+        font-size: 2.5rem; /* Zmniejszenie czcionki nagłówka sekcji */
+        /* Rozważ dostosowanie pozycjonowania absolutnego, jeśli sprawia problemy */
+    }
+
+    .offers {
+        width: 95%; /* Użycie procentowej szerokości */
+        flex-direction: column; /* Układ kolumnowy dla ofert */
+        height: auto; /* Automatyczna wysokość */
+        gap: 2rem;
+    }
+
+    .card {
+        width: 80%; /* Dostosowanie szerokości kart */
+        max-width: 350px; /* Maksymalna szerokość dla kart */
+        height: auto; /* Automatyczna wysokość, aby zawartość się mieściła */
+        min-height: 350px; /* Minimalna wysokość, aby zachować spójność */
+        margin-bottom: 2rem; /* Dodatkowy margines między kartami w układzie kolumnowym */
+    }
+
+    .sub-header {
+        width: 90%;
+        max-width: 550px;
+        margin: 30px auto; /* Uproszczone marginesy i wyśrodkowanie */
+        left: auto; /* Usunięcie pozycjonowania 'left' */
+        padding: 1.5em;
+        font-size: 1.3rem;
+    }
+
+    .feedback {
+        padding: 80px 20px; /* Zmniejszenie paddingu */
+    }
+
+    .feedback .review {
+        font-size: 2.5rem;
+    }
+
+    .feedback .customers-feedback {
+        font-size: 1.8rem;
+    }
+
+    .feedback .customers {
+        flex-direction: column; /* Układ kolumnowy dla opinii */
+        align-items: center; /* Wyśrodkowanie elementów w kolumnie */
+    }
+
+    .feedback .customers .item {
+        width: 90%;
+        max-width: 450px; /* Ograniczenie szerokości elementów opinii */
+    }
+
+    footer {
+        grid-template-columns: 1fr; /* Układ jednokolumnowy dla stopki */
+        text-align: center;
+        width: 95%;
+        margin: 2rem auto 0 auto; /* Dodanie marginesu górnego */
+    }
+
+    footer .column {
+        margin-bottom: 2rem;
+    }
+    
+    footer .column .logo {
+        margin: 0 auto 1.5rem auto; /* Wyśrodkowanie logo */
+    }
+
+    footer .socials {
+        position: static; /* Zmiana pozycjonowania na statyczne */
+        margin-top: 1rem;
+        font-size: 1.3rem;
+    }
+}
+
+
+/* Dla ekranów mniejszych niż 768px (tablety w orientacji pionowej) */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column; /* Menu nawigacyjne w kolumnie */
+        gap: 1rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    nav ul li a {
+        padding-bottom: 0.5rem; /* Mniejszy padding dla linków nawigacji */
+    }
+
+    .container {
+        padding: 3rem 1rem;
+    }
+
+    #about p {
+        font-size: 1.1rem;
+    }
+
+    .card-1 h1 {
+        font-size: 2rem;
+        top: -40px; /* Dostosowanie pozycjonowania */
+    }
+    
+    .card-1 h1:hover {
+        font-size: 2.2rem; /* Dostosowanie rozmiaru czcionki w hover */
+        margin-top: -1rem;
+    }
+
+    .card {
+        width: 90%;
+        min-height: 300px;
+    }
+
+    .card h3,
+    .card h4 {
+        font-size: 1.5rem; /* Zmniejszenie czcionek w kartach */
+    }
+    .card h4 {
+        padding-bottom: 1.5rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.8rem 1.2rem;
+    }
+
+    .btn:hover {
+        padding: 1rem 1.5rem; /* Dostosowanie paddingu w hover */
+    }
+    
+    .header { /* Klasa .header */
+        font-size: 2.5rem;
+        padding-top: 6rem;
+    }
+
+    .sub-header {
+        font-size: 1.1rem;
+        padding: 1em;
+    }
+
+    .feedback .review {
+        font-size: 2rem;
+    }
+
+    .feedback .customers-feedback {
+        font-size: 1.5rem;
+    }
+
+    .feedback .customers .item p {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+    
+    footer .column h3 { /* Zakładając, że masz h3 w kolumnach stopki */
+        font-size: 1.2rem;
+    }
+
+    footer .column a {
+        font-size: 0.9rem;
+    }
+}
+
+/* Dla ekranów mniejszych niż 480px (telefony komórkowe) */
+@media (max-width: 480px) {
+    .container {
+        padding: 2rem 1rem; /* Jeszcze mniejszy padding */
+    }
+
+    header {
+        padding-top: 1rem;
+    }
+
+    #about p {
+        font-size: 1rem;
+        width: 95%;
+    }
+    
+    .card-1 h1 {
+        font-size: 1.8rem;
+        top: -30px; /* Dalsze dostosowanie */
+    }
+    
+    .card-1 h1:hover {
+        font-size: 2rem;
+    }
+
+    .card-1 {
+        padding: 15px 20px;
+    }
+
+    .card {
+        width: 95%;
+    }
+    
+    .card h3,
+    .card h4 {
+        font-size: 1.3rem;
+    }
+    
+    .header { /* Klasa .header */
+        font-size: 2rem;
+        padding-top: 4rem;
+    }
+
+    .sub-header {
+        font-size: 1rem;
+        margin: 20px auto;
+    }
+
+    .feedback {
+        padding: 50px 10px;
+    }
+
+    .feedback .review {
+        font-size: 1.8rem;
+    }
+
+    .feedback .customers-feedback {
+        font-size: 1.3rem;
+    }
+
+    .feedback .customers .item {
+        padding: 20px;
+    }
+    
+    .feedback .customers .item .rating {
+        font-size: 1.5rem; /* Zmniejszenie rozmiaru gwiazdek oceny */
+    }
+
+    /* Bardzo mała czcionka - zastanów się, czy jest potrzebna lub czy można ją inaczej obsłużyć */
+    /* .feedback .customers .item #p2{ 
+         font-size: 5px !important;  // Ta reguła jest bardzo specyficzna. Rozważ, czy jest konieczna.
+    } */
+
+    footer .column {
+        margin-bottom: 1.5rem;
+    }
+}
+
+@property --angle{
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
