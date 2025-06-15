@@ -159,6 +159,70 @@
     }
 }
 
+/* Media Queries for plan.html */
+
+/* Tablety i małe laptopy (do 1024px) */
+@media (max-width: 1024px) {
+    .offers-full .card {
+        width: 45%; /* Dwa kafelki w rzędzie */
+        min-height: 400px;
+    }
+}
+
+/* Smartfony w orientacji pionowej i małe tablety (do 768px) */
+@media (max-width: 768px) {
+    .offers-full {
+        flex-direction: column; /* Kafelki ułożone pionowo */
+        align-items: center;
+        gap: 2rem; /* Zachowaj odstęp między kartami */
+    }
+
+    .offers-full .card {
+        width: 90%;
+        max-width: 400px;
+        min-height: 380px;
+        margin: 0 auto;
+    }
+
+    .offers-full .card h3 {
+        font-size: 1.8rem;
+    }
+
+    .offers-full .card h4 {
+        font-size: 2.2rem;
+    }
+
+    .offers-full .card p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Małe smartfony (do 480px) */
+@media (max-width: 480px) {
+    #pricing-full {
+        padding: 3rem 1rem;
+    }
+
+    .offers-full .card {
+        width: 95%;
+        min-height: 350px;
+        padding: 1.5em;
+    }
+
+    .offers-full .card h3 {
+        font-size: 1.5rem;
+    }
+
+    .offers-full .card h4 {
+        font-size: 1.8rem;
+    }
+
+    .offers-full .card p {
+        font-size: 0.85rem;
+    }
+}
+
+
 @keyframes spin{
   from{
     --angle: 0deg;
