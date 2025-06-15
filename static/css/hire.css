@@ -428,3 +428,59 @@ img {
         font-size: 0.9rem;
     }
 }
+
+/* Dodatkowy breakpoint dla bardzo małych ekranów (np. 320px szerokości) */
+@media (max-width: 320px) {
+    nav ul {
+        padding: 0.5rem;
+    }
+
+    nav ul li a {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .hire-container {
+        margin: 0.5rem;
+        padding: 1rem;
+    }
+
+    .hire-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .hire-container #p,
+    .hire-container #pp {
+        font-size: 0.9rem;
+        padding-bottom: 0.8rem;
+    }
+
+    .contact-info .contacting {
+        font-size: 1.3rem;
+    }
+
+    .contact-card a {
+        font-size: 1rem;
+    }
+
+    .contact-card i {
+        font-size: 2rem;
+    }
+
+    .container {
+        padding: 1rem 0.5rem;
+        gap: 1rem;
+    }
+
+    .container .column h4 {
+        font-size: 1rem;
+    }
+
+    .container .column > a {
+        font-size: 0.85rem;
+    }
+}
