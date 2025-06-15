@@ -302,6 +302,144 @@
     }
 }
 
+/* Media Queries for projects.html */
+
+/* Tablety i małe laptopy (do 1024px) */
+@media (max-width: 1024px) {
+    .projects-full {
+        padding: 1.5rem;
+    }
+
+    .projects-full .header {
+        font-size: 3rem;
+    }
+
+    .projects-full .sub-header {
+        font-size: 1.2rem;
+        padding: 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .project-grid-full {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .project-item h3 {
+        font-size: 1.4rem;
+    }
+
+    .project-item h4 {
+        font-size: 1.6rem;
+    }
+
+    .project-item p {
+        font-size: 0.95rem;
+    }
+
+    .more-projects-info {
+        padding: 2rem;
+    }
+
+    .more-projects-info h3 {
+        font-size: 1.8rem;
+    }
+
+    .more-projects-info p {
+        font-size: 1rem;
+    }
+}
+
+/* Smartfony w orientacji pionowej i małe tablety (do 768px) */
+@media (max-width: 768px) {
+    .projects-full {
+        padding: 1rem;
+    }
+
+    .projects-full .header {
+        font-size: 2.5rem;
+    }
+
+    .projects-full .sub-header {
+        font-size: 1rem;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    .project-grid-full {
+        grid-template-columns: 1fr; /* jeden projekt na wiersz */
+        gap: 1.5rem;
+    }
+
+    .project-item {
+        width: 90%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .project-item h3 {
+        font-size: 1.3rem;
+    }
+
+    .project-item h4 {
+        font-size: 1.5rem;
+    }
+
+    .project-item p {
+        font-size: 0.9rem;
+    }
+
+    .more-projects-info {
+        padding: 1.5rem;
+    }
+
+    .more-projects-info h3 {
+        font-size: 1.5rem;
+    }
+
+    .more-projects-info p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Małe smartfony (do 480px) */
+@media (max-width: 480px) {
+    .projects-full .header {
+        font-size: 2rem;
+    }
+
+    .projects-full .sub-header {
+        font-size: 0.9rem;
+        padding: 0;
+        margin-bottom: 0.8rem;
+    }
+
+    .project-item {
+        padding: 1rem;
+    }
+
+    .project-item h3 {
+        font-size: 1.2rem;
+    }
+
+    .project-item h4 {
+        font-size: 1.3rem;
+    }
+
+    .project-item p {
+        font-size: 0.85rem;
+    }
+
+    .more-projects-info h3 {
+        font-size: 1.3rem;
+    }
+
+    .more-projects-info p {
+        font-size: 0.85rem;
+    }
+}
+
+
 @keyframes spin{
   from{
     --angle: 0deg;
