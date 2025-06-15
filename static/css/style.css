@@ -603,203 +603,199 @@ footer .copyright:hover{
   }
 }
 
-/* === MEDIA QUERIES === */
+/* === MEDIA QUERIES (RESPONSYWNOŚĆ) - POPRAWIONA WERSJA === */
 
-/* Dla ekranów mniejszych niż 1024px (tablety w orientacji poziomej, małe laptopy) */
-@media (max-width: 1024px) {
-    .container {
-        padding: 4rem 1.5rem; /* Zmniejszenie paddingu kontenera */
-    }
+/* Dla dużych ekranów nie ma zmian, bazujemy na kodzie podstawowym. */
 
-    header {
-        grid-template-columns: 1fr; /* Układ jednokolumnowy dla nagłówka */
-        text-align: center; /* Wyśrodkowanie tekstu w nagłówku */
-    }
-
-    header .image {
-        order: -1; /* Przeniesienie obrazu nad tekst, jeśli tak wolisz */
-        margin-bottom: 2rem;
-    }
-
-    header .image img {
-        margin: auto; /* Wyśrodkowanie obrazu */
-    }
-
-    #about p {
-        width: 90%; /* Użycie procentowej szerokości */
-        margin: 0 auto; /* Wyśrodkowanie */
-        font-size: 1.3rem;
-    }
-
-    .card-1 {
-        width: 90%; /* Użycie procentowej szerokości */
-        max-width: 500px; /* Ograniczenie maksymalnej szerokości */
-        padding: 20px 30px;
-    }
-    
-    .card-1 h1 {
-        font-size: 2.5rem; /* Zmniejszenie czcionki nagłówka sekcji */
-        /* Rozważ dostosowanie pozycjonowania absolutnego, jeśli sprawia problemy */
-    }
-
-    .offers {
-        width: 95%; /* Użycie procentowej szerokości */
-        flex-direction: column; /* Układ kolumnowy dla ofert */
-        height: auto; /* Automatyczna wysokość */
-        gap: 2rem;
-    }
-
-    .card {
-        width: 80%; /* Dostosowanie szerokości kart */
-        max-width: 350px; /* Maksymalna szerokość dla kart */
-        height: auto; /* Automatyczna wysokość, aby zawartość się mieściła */
-        min-height: 350px; /* Minimalna wysokość, aby zachować spójność */
-        margin-bottom: 2rem; /* Dodatkowy margines między kartami w układzie kolumnowym */
+/* === EKRANY PONIŻEJ 1200px (np. mniejsze laptopy) === */
+@media (max-width: 1200px) {
+    /* Zmniejszamy szerokość głównych kontenerów, aby nie wychodziły poza ekran */
+    .container,
+    .offers,
+    .projects,
+    footer .container {
+        max-width: 95%; /* Używamy procentów zamiast stałej wartości px */
+        width: 100%;
     }
 
     .sub-header {
+        /* Poprawka krytycznego błędu pozycjonowania */
+        left: 50%;
+        transform: translateX(-50%); /* Lepszy sposób na centrowanie niż 'left: 40%' */
+        margin: 50px 0; /* Usuwamy negatywny margines */
         width: 90%;
-        max-width: 550px;
-        margin: 30px auto; /* Uproszczone marginesy i wyśrodkowanie */
-        left: auto; /* Usunięcie pozycjonowania 'left' */
-        padding: 1.5em;
-        font-size: 1.3rem;
+        max-width: 600px;
     }
 
-    .feedback {
-        padding: 80px 20px; /* Zmniejszenie paddingu */
-    }
-
-    .feedback .review {
-        font-size: 2.5rem;
-    }
-
-    .feedback .customers-feedback {
-        font-size: 1.8rem;
-    }
-
-    .feedback .customers {
-        flex-direction: column; /* Układ kolumnowy dla opinii */
-        align-items: center; /* Wyśrodkowanie elementów w kolumnie */
-    }
-
-    .feedback .customers .item {
-        width: 90%;
-        max-width: 450px; /* Ograniczenie szerokości elementów opinii */
-    }
-
-    footer {
-        grid-template-columns: 1fr; /* Układ jednokolumnowy dla stopki */
+    footer .copyright {
+        /* Poprawka pozycjonowania stopki */
+        position: relative; /* Zmiana z absolute na relative, aby element był w przepływie dokumentu */
+        left: auto;
+        top: auto;
         text-align: center;
-        width: 95%;
-        margin: 2rem auto 0 auto; /* Dodanie marginesu górnego */
-    }
-
-    footer .column {
-        margin-bottom: 2rem;
-    }
-    
-    footer .column .logo {
-        margin: 0 auto 1.5rem auto; /* Wyśrodkowanie logo */
-    }
-
-    footer .socials {
-        position: static; /* Zmiana pozycjonowania na statyczne */
-        margin-top: 1rem;
-        font-size: 1.3rem;
+        margin-top: 2rem; /* Dodajemy margines, aby oddzielić od reszty stopki */
+        width: 100%;
     }
 }
 
 
-/* Dla ekranów mniejszych niż 768px (tablety w orientacji pionowej) */
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column; /* Menu nawigacyjne w kolumnie */
-        gap: 1rem;
-        margin-top: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    nav ul li a {
-        padding-bottom: 0.5rem; /* Mniejszy padding dla linków nawigacji */
-    }
-
+/* === EKRANY PONIŻEJ 1024px (Tablety w orientacji poziomej) === */
+@media (max-width: 1024px) {
     .container {
-        padding: 3rem 1rem;
+        padding: 4rem 2rem; /* Mniejszy padding na tabletach */
+    }
+
+    header {
+        grid-template-columns: 1fr; /* Zmiana na jedną kolumnę */
+        text-align: center;
+        gap: 1rem;
+    }
+
+    header .content {
+        order: 2; /* Tekst pod obrazkiem */
+    }
+
+    header .image {
+        order: 1; /* Obrazek nad tekstem */
+        margin: 0 auto 2rem auto;
     }
 
     #about p {
-        font-size: 1.1rem;
+        width: 100%; /* Pełna szerokość w kontenerze */
+        max-width: 600px; /* Ograniczenie dla czytelności */
+        margin: 0 auto;
+        font-size: 1.3rem;
+    }
+
+    .card-1 {
+        width: 90%;
+        max-width: 550px;
     }
 
     .card-1 h1 {
-        font-size: 2rem;
-        top: -40px; /* Dostosowanie pozycjonowania */
+        font-size: 2.5rem;
+    }
+
+    .offers {
+        flex-direction: column; /* Oferty jedna pod drugą */
+        height: auto; /* Wysokość dopasowuje się do zawartości */
+        gap: 3rem;
     }
     
-    .card-1 h1:hover {
-        font-size: 2.2rem; /* Dostosowanie rozmiaru czcionki w hover */
-        margin-top: -1rem;
-    }
-
     .card {
-        width: 90%;
-        min-height: 300px;
+        width: 80%;
+        max-width: 400px;
+        min-height: auto; /* Pozwalamy kartom mieć różną wysokość w razie potrzeby */
     }
 
+    .projects {
+        height: auto; /* Najważniejsza poprawka - wysokość musi być automatyczna */
+        padding: 2rem 1rem;
+    }
+
+    /* Zapewniamy, że rzędy w siatce projektów mogą istnieć samodzielnie */
+    .projects .project-grid .projects-top,
+    .projects .project-grid .projects-bottom {
+        margin-bottom: 0;
+    }
+
+    .feedback {
+        padding: 4rem 2rem;
+    }
+
+    .feedback .customers {
+        flex-direction: column; /* Opinie jedna pod drugą */
+        align-items: center; /* Wyśrodkowanie opinii */
+    }
+
+    .feedback .customers .item {
+        width: 100%;
+        max-width: 500px; /* Ograniczenie szerokości opinii */
+    }
+
+    footer .container {
+        flex-direction: column; /* Kolumny w stopce jedna pod drugą */
+        text-align: center;
+        gap: 2rem;
+    }
+}
+
+
+/* === EKRANY PONIŻEJ 768px (Tablety w orientacji pionowej) === */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column; /* Nawigacja w kolumnie */
+        gap: 1.5rem;
+        margin: 1.5rem 0;
+    }
+
+    .container {
+        padding: 3rem 1.5rem;
+    }
+
+    a:hover {
+        /* Wyłączamy powiększanie fontu przy hover na urządzeniach dotykowych, bo nie ma "hover" */
+        font-size: inherit; /* Używa rozmiaru zadeklarowanego dla 'a' */
+        color: #5e3bee; /* Zachowujemy zmianę koloru */
+    }
+
+    nav ul li a:hover {
+        font-size: 1.4rem !important; /* Tutaj możemy zostawić dla spójności, ale efekt będzie widoczny głównie na desktopie */
+    }
+
+    .card-1 h1 {
+        position: static; /* Usuwamy pozycjonowanie absolutne, które sprawia problemy */
+        margin-bottom: 2rem;
+        font-size: 2.2rem;
+    }
+
+    .card-1 h1:hover {
+        margin-top: 0; /* Resetujemy margines z hover */
+        font-size: 2.3rem;
+    }
+    
     .card h3,
     .card h4 {
-        font-size: 1.5rem; /* Zmniejszenie czcionek w kartach */
-    }
-    .card h4 {
-        padding-bottom: 1.5rem;
+        font-size: 1.8rem;
     }
 
-    .btn {
-        font-size: 0.9rem;
-        padding: 0.8rem 1.2rem;
-    }
-
-    .btn:hover {
-        padding: 1rem 1.5rem; /* Dostosowanie paddingu w hover */
-    }
-    
-    .header { /* Klasa .header */
+    .header { /* Klasa .header (np. dla "Projects") */
         font-size: 2.5rem;
         padding-top: 6rem;
     }
 
     .sub-header {
-        font-size: 1.1rem;
-        padding: 1em;
+        font-size: 1.2rem;
+    }
+    
+    .projects .project-grid .project-item {
+        width: 70%; /* Projekty zajmują więcej szerokości */
+        max-width: 350px;
+    }
+    
+    .projects .project-grid button {
+        left: 50%;
+        transform: translateX(-50%); /* Poprawne centrowanie przycisku */
     }
 
     .feedback .review {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
-
+    
     .feedback .customers-feedback {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
     }
 
     .feedback .customers .item p {
         font-size: 1rem;
-        line-height: 1.3rem;
-    }
-    
-    footer .column h3 { /* Zakładając, że masz h3 w kolumnach stopki */
-        font-size: 1.2rem;
-    }
-
-    footer .column a {
-        font-size: 0.9rem;
     }
 }
 
-/* Dla ekranów mniejszych niż 480px (telefony komórkowe) */
+
+/* === EKRANY PONIŻEJ 480px (Telefony komórkowe) === */
 @media (max-width: 480px) {
     .container {
-        padding: 2rem 1rem; /* Jeszcze mniejszy padding */
+        padding: 3rem 1rem;
     }
 
     header {
@@ -808,68 +804,55 @@ footer .copyright:hover{
 
     #about p {
         font-size: 1rem;
-        width: 95%;
     }
     
-    .card-1 h1 {
-        font-size: 1.8rem;
-        top: -30px; /* Dalsze dostosowanie */
-    }
-    
-    .card-1 h1:hover {
-        font-size: 2rem;
-    }
-
-    .card-1 {
-        padding: 15px 20px;
-    }
-
-    .card {
-        width: 95%;
+    .card-1, .card {
+        width: 95%; /* Elementy zajmują prawie całą szerokość */
     }
     
     .card h3,
     .card h4 {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
     }
     
-    .header { /* Klasa .header */
+    .btn {
+        padding: 0.8rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .btn:hover {
+        padding: 1rem 1.5rem;
+    }
+
+    .header {
         font-size: 2rem;
-        padding-top: 4rem;
+        padding-top: 5rem;
     }
 
     .sub-header {
         font-size: 1rem;
-        margin: 20px auto;
+        padding: 1.5rem;
+    }
+    
+    .projects .project-grid .project-item {
+        width: 90%; /* Na najmniejszych ekranach projekt zajmuje prawie całą szerokość */
     }
 
     .feedback {
-        padding: 50px 10px;
+        padding: 3rem 1rem;
     }
 
     .feedback .review {
         font-size: 1.8rem;
+        padding: 1rem;
     }
 
     .feedback .customers-feedback {
-        font-size: 1.3rem;
-    }
-
-    .feedback .customers .item {
-        padding: 20px;
+        font-size: 1.4rem;
     }
     
-    .feedback .customers .item .rating {
-        font-size: 1.5rem; /* Zmniejszenie rozmiaru gwiazdek oceny */
-    }
-
-    /* Bardzo mała czcionka - zastanów się, czy jest potrzebna lub czy można ją inaczej obsłużyć */
-    /* .feedback .customers .item #p2{ 
-         font-size: 5px !important;  // Ta reguła jest bardzo specyficzna. Rozważ, czy jest konieczna.
-    } */
-
-    footer .column {
-        margin-bottom: 1.5rem;
+    .feedback .customers .item {
+        padding: 1.5rem;
     }
 }
 
