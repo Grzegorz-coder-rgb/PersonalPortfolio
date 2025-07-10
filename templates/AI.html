@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <title>AI & ML Developer - Szczegóły Kursu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/course-details-common.css') }}">
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}#main">Home</a></li>
+            <li><a href="{{ url_for('index') }}#about">About Me</a></li>
+            <li><a href="{{ url_for('index') }}#pricing">Pricing</a></li>
+            <li><a href="{{ url_for('index') }}#courses">Courses</a></li>
+            <li><a href="{{ url_for('index') }}#projects">My Projects</a></li>
+            <li><a href="{{ url_for('index') }}#feedback">Feedback</a></li>
+            <button class="btn" onclick="window.location.href='{{ url_for('hire') }}';">Hire Me!</button>
+        </ul>
+    </nav>
+
+    <div class="blur"></div>
+
+    <section class="container single-course-section">
+        <div class="course-header-hero">
+            <h1 class="header">AI & ML Developer</h1>
+            <span class="price-hero">Cena: 3500zł</span>
+            <p class="description-hero">
+                Wkrocz do fascynującego świata Sztucznej Inteligencji i Uczenia Maszynowego. Naucz się budować modele predykcyjne, analizować dane i tworzyć inteligentne systemy, które uczą się i adaptują. Kurs ten otworzy przed Tobą drzwi do jednej z najbardziej dynamicznie rozwijających się dziedzin technologii.
+            </p>
+            <button class="btn">Zapisz się na kurs</button>
+        </div>
+
+        <div class="course-content-card">
+            <h2>Program Kursu:</h2>
+            <ul class="program-list">
+                <li>Wprowadzenie do AI i ML: definicje, zastosowania, etyka</li>
+                <li>Podstawy Pythona dla Data Science: NumPy (obliczenia numeryczne), Pandas (analiza danych)</li>
+                <li>Wizualizacja danych: Matplotlib, Seaborn</li>
+                <li>Podstawy statystyki i algebry liniowej dla ML</li>
+                <li>Algorytmy Uczenia Nadzorowanego (Supervised Learning): regresja liniowa i logistyczna, drzewa decyzyjne, lasy losowe, maszyny wektorów nośnych (SVM)</li>
+                <li>Algorytmy Uczenia Nienadzorowanego (Unsupervised Learning): klasteryzacja (K-Means, DBSCAN), redukcja wymiarowości (PCA)</li>
+                <li>Ocena modeli ML: metryki, walidacja krzyżowa, overfitting, underfitting</li>
+                <li>Wprowadzenie do Sieci Neuronowych i Deep Learning: podstawy, architektury (Perceptron, MLP)</li>
+                <li>Biblioteki Deep Learning: TensorFlow i PyTorch - budowa i trening prostych sieci</li>
+                <li>Przetwarzanie Języka Naturalnego (NLP) - podstawy: tokenizacja, wektoryzacja, klasyfikacja tekstu</li>
+                <li>Wprowadzenie do Computer Vision - podstawy: rozpoznawanie obrazów (CNN)</li>
+                <li>Jupyter Notebook/JupyterLab: środowisko pracy dla Data Scientistów</li>
+                <li>Model Deployment: jak wdrożyć model ML do produkcji (wprowadzenie)</li>
+                <li>Systemy kontroli wersji (Git, GitHub) w projektach ML.</li>
+                <li>Projekty praktyczne z zastosowaniem rzeczywistych zbiorów danych.</li>
+            </ul>
+
+            <h2>Dla Kogo Jest Ten Kurs:</h2>
+            <p>
+                Kurs przeznaczony jest dla osób z podstawową znajomością programowania w Pythonie, które chcą specjalizować się w dziedzinie sztucznej inteligencji i uczenia maszynowego. Idealny dla analityków danych, programistów, naukowców i wszystkich, którzy chcą zrozumieć i tworzyć inteligentne systemy.
+            </p>
+
+            <h2>Czego Nauczysz Się na Kursie:</h2>
+            <ul class="learn-list">
+                <li>Tworzyć i trenować modele Uczenia Maszynowego dla różnych problemów.</li>
+                <li>Analizować i przetwarzać dane za pomocą Pythona i jego bibliotek.</li>
+                <li>Wdrażać rozwiązania AI/ML w praktycznych zastosowaniach.</li>
+                <li>Oceniać wydajność i poprawiać skuteczność modeli ML.</li>
+                <li>Rozumieć podstawowe koncepcje Deep Learning i sieci neuronowych.</li>
+                <li>Efektywnie korzystać z narzędzi takich jak Jupyter, Git i GitHub w projektach AI/ML.</li>
+            </ul>
+
+            <h2>Wykorzystywane technologie:</h2>
+            <div class="technologies-grid">
+                <div class="technology-item"><i class="devicon-python-plain colored"></i><span>Python</span></div>
+                <div class="technology-item"><i class="devicon-jupyter-plain colored"></i><span>Jupyter (do analizy)</span></div>
+                <div class="technology-item"><i class="devicon-tensorflow-plain colored"></i><span>TensorFlow (biblioteka ML)</span></div>
+                <div class="technology-item"><i class="devicon-pytorch-plain colored"></i><span>PyTorch (biblioteka ML)</span></div>
+                <div class="technology-item"><i class="devicon-numpy-plain colored"></i><span>NumPy (do obliczeń naukowych)</span></div>
+                <div class="technology-item"><i class="devicon-pandas-plain colored"></i><span>Pandas (do analizy danych)</span></div>
+                <div class="technology-item"><i class="devicon-scikitlearn-plain colored"></i><span>Scikit-learn (biblioteka ML)</span></div>
+                <div class="technology-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>
+                <div class="technology-item"><i class="devicon-github-original colored"></i><span>GitHub</span></div>
+            </div>
+
+            <div class="cta-bottom">
+                <p>Zanurz się w przyszłość technologii z AI i Machine Learning!</p>
+                <button class="btn">Zapisz się teraz!</button>
+            </div>
+        </div>
+
+    </section>
+
+    <footer class="container">
+        <span class="blur"></span>
+        <span class="blur"></span>
+        <div class="column">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}">
+            </div>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+            <div class="socials">
+                <a href="#"><i class="ri-youtube-line"></i></a>
+                <a href="#"><i class="ri-instagram-line"></i></a>
+                <a href="#"><i class="ri-github-line"></i></a>
+                <a href="#"><i class="ri-facebook-line"></i></a>
+            </div>
+        </div>
+        <div class="column">
+            <h4>Company</h4>
+            <a href="#">Business</a>
+            <a href="#">Partnership</a>
+            <a href="#">Network</a>
+        </div>
+        <div class="column">
+            <h4>Projects</h4>
+            <a href="#">HTML</a>
+            <a href="#">CSS & JS</a>
+            <a href="#">Python</a>
+        </div>
+        <div class="column">
+            <h4>Contact</h4>
+            <a href="#">Contact Us</a>
+            <a href="#">Privicy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+        <div class="copyright">
+            Copyright © 2025 GregProg Channel. All Rights Reserved.
+        </div>
+    </footer>
+
+</body>
+</html>
