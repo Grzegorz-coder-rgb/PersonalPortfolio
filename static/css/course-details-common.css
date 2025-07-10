@@ -814,139 +814,76 @@ header .image img {
 }
 
 /* === Stopka (Footer) === */
-footer {
-    background-color: var(--dark-bg-secondary);
-    color: var(--text-primary);
-    padding-top: 5rem;
-    position: relative;
-    z-index: 0;
-    margin-top: auto;
-    overflow: hidden;
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+.container {
+  padding: 5rem;
+  background-color: #1a1f2b;
+  margin: 0 auto;
+  max-width: 1200px; /* Rozważ użycie max-width dla lepszej responsywności */
+  display: flex;
+  gap: 2rem; /* Dodaje odstęp między kolumnami */
+  flex-wrap: wrap; /* Pozwala kolumnom zawijać się na mniejszych ekranach */
+  position: relative;
 }
 
-footer .container {
-    padding: 0 2rem 3rem; /* Dopasowany padding */
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsywny grid */
-    gap: 2rem 3rem;
-    background-color: transparent; /* Footer container nie ma tła */
-    box-shadow: none; /* Brak cienia */
+.container::after, .container::before{
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+  padding: 10px; /* Ten padding tworzy iluzję grubości ramki, jeśli tło elementu jest przezroczyste lub inne */
+  border-radius: 10px;
+  animation: spin 1s linear infinite; /* ***POPRAWKA: Dodano animację*** */
 }
 
-footer::before { /* Rozmycie (glow) dla stopki */
-    content: '';
-    position: absolute;
-    top: calc(-1 * var(--border-thickness));
-    left: calc(-1 * var(--border-thickness));
-    right: calc(-1 * var(--border-thickness));
-    bottom: calc(-1 * var(--border-thickness));
-    background-image: conic-gradient(from var(--angle), var(--gradient-start), var(--gradient-mid1), var(--gradient-mid2), var(--gradient-mid3), var(--gradient-start));
-    z-index: -1;
-    border-radius: 10px; /* Jeśli stopka ma zaokrąglone rogi */
-    animation: spin 3s linear infinite;
-    filter: blur(var(--blur-intensity-light));
-    opacity: 0.7;
+.container::before{
+  filter: blur(8rem);
+  opacity: 1;
 }
 
-footer::after { /* Ostra ramka dla stopki */
-    content: '';
-    position: absolute;
-    top: calc(-1 * var(--border-thickness));
-    left: calc(-1 * var(--border-thickness));
-    right: calc(-1 * var(--border-thickness));
-    bottom: calc(-1 * var(--border-thickness));
-    background-image: conic-gradient(from var(--angle), var(--gradient-start), var(--gradient-mid1), var(--gradient-mid2), var(--gradient-mid3), var(--gradient-start));
-    z-index: -1;
-    border-radius: 10px; /* Jeśli stopka ma zaokrąglone rogi */
-    animation: spin 3s linear infinite;
-    background-clip: padding-box;
-    -webkit-background-clip: padding-box;
-    border: var(--border-thickness) solid transparent;
+.container .column {
+  flex-grow: 1; 
+  flex-basis: 200px; 
+ 
+}
+
+.container .column h4 {
+  margin-bottom: 1rem; /* Odstęp pod nagłówkiem H4 */
+}
+
+.container .column h4{
+  cursor: pointer;
 }
 
 
-footer .column {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
+.container .column > a { 
+  display: block;
+  margin-bottom: 0.5rem; /* Odstęp między linkami w kolumnie */
 }
 
-footer .column h4 {
-    color: var(--text-primary);
-    margin-bottom: 1.25rem;
-    font-size: 1.3rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: color 0.3s ease;
+.container .column > a:hover{
+  font-size: 1.5rem !important;
 }
 
-footer .column h4:hover {
-    color: var(--dark-accent-purple);
+.container .column .socials{
+  font-size: 2rem;
 }
 
-footer .column > a {
-    display: block;
-    color: var(--text-muted);
-    margin-bottom: 0.7rem;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
+footer .copyright{
+  position: absolute;
+  left: 34%;
+  top: 20rem;
 }
 
-footer .column > a:hover {
-    color: var(--dark-accent-blue);
-    transform: translateX(5px);
-    font-size: 0.95rem !important; /* Usuwamy powiększanie na hover z globalnego a */
+footer .copyright:hover{
+  cursor: pointer;
+  color: #5e3bee;
+  background-color: #000;
 }
-
-footer .column .socials {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    margin-top: 0.5rem;
-}
-
-footer .column .socials a {
-    color: var(--text-light);
-    font-size: 1.8rem;
-    transition: all 0.3s ease;
-    padding: 0.5rem;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-footer .column .socials a:hover {
-    color: var(--dark-accent-blue);
-    transform: translateY(-5px) scale(1.1);
-    border-color: var(--dark-accent-blue);
-    box-shadow: 0 0 15px rgba(0, 68, 255, 0.4);
-}
-
-.copyright {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1.5rem 2rem;
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin-top: 2rem;
-    position: relative; /* Zmiana na relative */
-    left: auto;
-    top: auto;
-}
-
-.copyright:hover {
-    cursor: pointer;
-    color: var(--dark-accent-purple);
-    background-color: transparent;
-}
-
 
 /* === Animacje CSS === */
 @property --angle {
