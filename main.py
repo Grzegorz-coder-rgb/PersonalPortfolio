@@ -18,5 +18,26 @@ def projects():
 def plan():
     return render_template("plan.html")
 
+@app.route("/python.html")
+def view():
+    return render_template("python.html")
+
+@app.route("/full.html")
+def full():
+    return render_template("full.html")
+
+@app.route("/frontend.html")
+def frontend():
+    return render_template("frontend.html")
+
+@app.route("/backend.html")
+def backend():
+    return render_template("backend.html")
+
+@app.route("/AI.html")
+def ai():
+    return render_template("AI.html")
+
+
 if __name__ == '__main__':
     app.run(debug=True)
