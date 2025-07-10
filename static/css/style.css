@@ -861,3 +861,228 @@ footer .copyright:hover{
   initial-value: 0deg;
   inherits: false;
 }
+
+/* === DODANE STYLE DLA SEKCJI COURSES I KART KURSÓW === */
+
+#courses {
+    padding: 5rem 2rem; /* Spójny padding z .container */
+    display: flex;
+    flex-direction: column; /* Karty kursów jedna pod drugą */
+    align-items: center; /* Wyśrodkowanie kart */
+    gap: 3rem; /* Odstęp między kartami kursów */
+    max-width: 1200px; /* Ograniczenie szerokości tak jak inne kontenery */
+    margin: auto; /* Wyśrodkowanie całej sekcji */
+}
+
+.course-card {
+    margin: 0 auto; /* Upewnij się, że karty są centrowane indywidualnie */
+    padding: 30px 50px; /* Spójny padding z card-1 */
+    width: 100%; /* Pełna szerokość w ramach #courses, ale ograniczymy ją max-width */
+    max-width: 800px; /* Maksymalna szerokość dla czytelności treści */
+    min-height: 400px; /* Minimalna wysokość, aby nie były zbyt małe */
+    background: #1c1f2b;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Tekst i elementy wyrównane do lewej */
+    justify-content: flex-start; /* Treść zaczyna się od góry */
+    gap: 10px; /* Domyślny odstęp między elementami w karcie */
+    text-align: left; /* Wyrównanie tekstu */
+    box-shadow: 0 0 20px rgba(0, 255, 153, 0.1); /* Lekki cień, spójny z paletą */
+}
+
+/* Animowane ramki dla .course-card - skopiowane z .card i .card-1 */
+.course-card::after, .course-card::before{
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 3px; /* Ten padding tworzy iluzję grubości ramki */
+    border-radius: 10px;
+    animation: 3s spin linear infinite;
+}
+
+.course-card::before{
+    filter: blur(1.5rem);
+    opacity: 0.5;
+}
+
+.course-card h1 {
+    font-size: 2.8rem; /* Nieco mniejszy niż card-1 h1, bardziej proporcjonalny */
+    color: #5e3bee;
+    margin-bottom: 10px;
+    text-align: center; /* Centrowanie nagłówka */
+    width: 100%; /* Rozciągnij na całą szerokość */
+}
+
+.course-card h1 strong { /* Styl dla ceny */
+    font-size: 1.6rem;
+    color: #fff;
+    display: block; /* Cena w nowej linii */
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+.course-card p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.course-card h2 {
+    font-size: 1.6rem;
+    color: #ccc;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-align: left;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Delikatna linia oddzielająca */
+    padding-bottom: 5px;
+}
+
+.course-card .technology-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.course-card .technology-item i {
+    font-size: 1.8em; /* Rozmiar ikon technologii */
+}
+
+/* === RESPONSYWNOŚĆ DLA SEKCJI COURSES - ZGODNIE Z ISTNIEJĄCĄ STRUKTURĄ MEDIA QUERIES === */
+
+/* === EKRANY PONIŻEJ 1200px (np. mniejsze laptopy) === */
+@media (max-width: 1200px) {
+    #courses {
+        max-width: 95%;
+    }
+}
+
+/* === EKRANY PONIŻEJ 1024px (Tablety w orientacji poziomej) === */
+@media (max-width: 1024px) {
+    #courses {
+        padding: 4rem 2rem;
+        gap: 2rem;
+    }
+
+    .course-card {
+        width: 90%;
+        max-width: 650px; /* Ograniczenie szerokości na tabletach */
+        padding: 25px 40px;
+    }
+
+    .course-card h1 {
+        font-size: 2.2rem;
+    }
+
+    .course-card h1 strong {
+        font-size: 1.4rem;
+    }
+
+    .course-card p {
+        font-size: 1rem;
+    }
+
+    .course-card h2 {
+        font-size: 1.4rem;
+    }
+
+    .course-card .technology-item {
+        font-size: 1em;
+    }
+
+    .course-card .technology-item i {
+        font-size: 1.6em;
+    }
+}
+
+/* === EKRANY PONIŻEJ 768px (Tablety w orientacji pionowej) === */
+@media (max-width: 768px) {
+    #courses {
+        padding: 3rem 1.5rem;
+        gap: 1.5rem;
+    }
+
+    .course-card {
+        width: 95%; /* Na węższych ekranach zajmuje więcej miejsca */
+        max-width: 500px; /* Utrzymujemy max-width dla kontroli */
+        padding: 20px 30px;
+        min-height: auto; /* Pozwalamy karcie na dynamiczną wysokość */
+    }
+
+    .course-card h1 {
+        font-size: 1.8rem;
+    }
+
+    .course-card h1 strong {
+        font-size: 1.2rem;
+    }
+
+    .course-card p {
+        font-size: 0.95rem;
+    }
+
+    .course-card h2 {
+        font-size: 1.2rem;
+        margin-top: 10px;
+        margin-bottom: 8px;
+    }
+
+    .course-card .technology-item {
+        font-size: 0.9em;
+    }
+
+    .course-card .technology-item i {
+        font-size: 1.4em;
+    }
+}
+
+/* === EKRANY PONIŻEJ 480px (Telefony komórkowe) === */
+@media (max-width: 480px) {
+    #courses {
+        padding: 2rem 1rem;
+        gap: 1rem;
+    }
+
+    .course-card {
+        width: 100%; /* Pełna szerokość na bardzo małych ekranach */
+        padding: 15px 20px;
+    }
+
+    .course-card h1 {
+        font-size: 1.5rem;
+    }
+
+    .course-card h1 strong {
+        font-size: 1rem;
+    }
+
+    .course-card p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .course-card h2 {
+        font-size: 1rem;
+        margin-top: 8px;
+        margin-bottom: 5px;
+    }
+
+    .course-card .technology-item {
+        font-size: 0.85em;
+    }
+
+    .course-card .technology-item i {
+        font-size: 1.2em;
+    }
+}
