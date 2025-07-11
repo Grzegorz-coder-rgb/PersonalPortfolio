@@ -216,11 +216,37 @@
                 </select>
                 <p class="form-help-text">Wybierz predefiniowaną klasę gradientu dla kursu.</p>
             </div>
+            <div id="modules-container">
+                <h3 style="margin-top: 1rem; font-weight: bold;">Moduły i liczba lekcji</h3>
+                <div class="form-group module-entry">
+                    <label class="form-label">Nazwa Modułu:</label>
+                    <input type="text" name="module_name[]" class="form-input" required>
+                    <label class="form-label">Liczba Lekcji:</label>
+                    <input type="number" name="module_lessons[]" class="form-input" min="1" required>
+                </div>
+            </div>
+
+            <button type="button" onclick="addModule()" class="btn btn-secondary" style="margin-top: 12px;">+ Dodaj Moduł</button>
+
             <div class="button-group">
                 <button type="submit" class="btn btn-primary">Dodaj Kurs</button>
                 <a href="{{ url_for('admin_courses') }}" class="btn btn-secondary">Anuluj</a>
             </div>
         </form>
     </div>
+    <script>
+        function addModule() {
+            const container = document.getElementById('modules-container');
+            const newModule = document.createElement('div');
+            newModule.className = 'form-group module-entry';
+            newModule.innerHTML = `
+                <label class="form-label">Nazwa Modułu:</label>
+                <input type="text" name="module_name[]" class="form-input" required>
+                <label class="form-label">Liczba Lekcji:</label>
+                <input type="number" name="module_lessons[]" class="form-input" min="1" required>
+            `;
+            container.appendChild(newModule);
+        }
+    </script>
 </body>
 </html>
