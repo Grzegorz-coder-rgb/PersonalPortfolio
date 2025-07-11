@@ -23,80 +23,98 @@
         </ul>
     </nav>
 
-    <div class="blur"></div>
+    <main class="container">
+        <h2 class="section-header text-center">AI & ML Developer</h2>
 
-    <section class="container single-course-section">
-        <div class="course-header-hero">
-            <h1 class="header">AI & ML Developer</h1>
-            <span class="price-hero">Cena: 3500zł</span>
-            <p class="description-hero">
-                Wkrocz do fascynującego świata Sztucznej Inteligencji i Uczenia Maszynowego. Naucz się budować modele predykcyjne, analizować dane i tworzyć inteligentne systemy, które uczą się i adaptują. Kurs ten otworzy przed Tobą drzwi do jednej z najbardziej dynamicznie rozwijających się dziedzin technologii.
-            </p>
-            <button class="btn">Zapisz się na kurs</button>
-        </div>
-
-        <div class="course-content-card">
-            <h2>Program Kursu:</h2>
-            <ul class="program-list">
-                <li>Wprowadzenie do AI i ML: definicje, zastosowania, etyka</li>
-                <li>Podstawy Pythona dla Data Science: NumPy (obliczenia numeryczne), Pandas (analiza danych)</li>
-                <li>Wizualizacja danych: Matplotlib, Seaborn</li>
-                <li>Podstawy statystyki i algebry liniowej dla ML</li>
-                <li>Algorytmy Uczenia Nadzorowanego (Supervised Learning): regresja liniowa i logistyczna, drzewa decyzyjne, lasy losowe, maszyny wektorów nośnych (SVM)</li>
-                <li>Algorytmy Uczenia Nienadzorowanego (Unsupervised Learning): klasteryzacja (K-Means, DBSCAN), redukcja wymiarowości (PCA)</li>
-                <li>Ocena modeli ML: metryki, walidacja krzyżowa, overfitting, underfitting</li>
-                <li>Wprowadzenie do Sieci Neuronowych i Deep Learning: podstawy, architektury (Perceptron, MLP)</li>
-                <li>Biblioteki Deep Learning: TensorFlow i PyTorch - budowa i trening prostych sieci</li>
-                <li>Przetwarzanie Języka Naturalnego (NLP) - podstawy: tokenizacja, wektoryzacja, klasyfikacja tekstu</li>
-                <li>Wprowadzenie do Computer Vision - podstawy: rozpoznawanie obrazów (CNN)</li>
-                <li>Jupyter Notebook/JupyterLab: środowisko pracy dla Data Scientistów</li>
-                <li>Model Deployment: jak wdrożyć model ML do produkcji (wprowadzenie)</li>
-                <li>Systemy kontroli wersji (Git, GitHub) w projektach ML.</li>
-                <li>Projekty praktyczne z zastosowaniem rzeczywistych zbiorów danych.</li>
-            </ul>
-
-            <h2>Dla Kogo Jest Ten Kurs:</h2>
-            <p>
-                Kurs przeznaczony jest dla osób z podstawową znajomością programowania w Pythonie, które chcą specjalizować się w dziedzinie sztucznej inteligencji i uczenia maszynowego. Idealny dla analityków danych, programistów, naukowców i wszystkich, którzy chcą zrozumieć i tworzyć inteligentne systemy.
-            </p>
-
-            <h2>Czego Nauczysz Się na Kursie:</h2>
-            <ul class="learn-list">
-                <li>Tworzyć i trenować modele Uczenia Maszynowego dla różnych problemów.</li>
-                <li>Analizować i przetwarzać dane za pomocą Pythona i jego bibliotek.</li>
-                <li>Wdrażać rozwiązania AI/ML w praktycznych zastosowaniach.</li>
-                <li>Oceniać wydajność i poprawiać skuteczność modeli ML.</li>
-                <li>Rozumieć podstawowe koncepcje Deep Learning i sieci neuronowych.</li>
-                <li>Efektywnie korzystać z narzędzi takich jak Jupyter, Git i GitHub w projektach AI/ML.</li>
-            </ul>
-
-            <h2>Wykorzystywane technologie:</h2>
-            <div class="technologies-grid">
-                <div class="technology-item"><i class="devicon-python-plain colored"></i><span>Python</span></div>
-                <div class="technology-item"><i class="devicon-jupyter-plain colored"></i><span>Jupyter (do analizy)</span></div>
-                <div class="technology-item"><i class="devicon-tensorflow-plain colored"></i><span>TensorFlow (biblioteka ML)</span></div>
-                <div class="technology-item"><i class="devicon-pytorch-plain colored"></i><span>PyTorch (biblioteka ML)</span></div>
-                <div class="technology-item"><i class="devicon-numpy-plain colored"></i><span>NumPy (do obliczeń naukowych)</span></div>
-                <div class="technology-item"><i class="devicon-pandas-plain colored"></i><span>Pandas (do analizy danych)</span></div>
-                <div class="technology-item"><i class="devicon-scikitlearn-plain colored"></i><span>Scikit-learn (biblioteka ML)</span></div>
-                <div class="technology-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>
-                <div class="technology-item"><i class="devicon-github-original colored"></i><span>GitHub</span></div>
+        <div class="course-detail-page-wrapper glass-card course-gradient-ai-ml">
+            <div class="course-main-info">
+                <h3 class="course-title">AI & ML Developer</h3>
+                <p class="course-description">
+                    Wkrocz do fascynującego świata Sztucznej Inteligencji i Uczenia Maszynowego. Naucz się budować modele predykcyjne, analizować dane, wizualizować wyniki i tworzyć inteligentne systemy, które uczą się i adaptują do nowych danych. Poznaj praktyczne zastosowania AI i ML w biznesie i nauce.
+                </p>
+                <div class="course-price-area">
+                    <span class="price">3500zł</span>
+                    {# Zmieniono akcję przycisku "Zapisz się na kurs" na przekierowanie do hire.html #}
+                    <a href="{{ url_for('hire') }}" class="btn enroll-btn"><i class="ri-arrow-right-line"></i> Zapisz się na kurs</a>
+                </div>
+                <div class="technologies-used">
+                    <h4>Wykorzystywane technologie:</h4>
+                    <div class="tech-tags-grid">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Jupyter</span>
+                        <span class="tech-tag">TensorFlow</span>
+                        <span class="tech-tag">PyTorch</span>
+                        <span class="tech-tag">NumPy</span>
+                        <span class="tech-tag">Pandas</span>
+                        <span class="tech-tag">Scikit-learn</span>
+                        <span class="tech-tag">Git</span>
+                        <span class="tech-tag">GitHub</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="cta-bottom">
-                <p>Zanurz się w przyszłość technologii z AI i Machine Learning!</p>
-                <button class="btn">Zapisz się teraz!</button>
+            <div class="course-program-info">
+                <h3>Program Kursu:</h3>
+                <ul class="program-list">
+                    <li>Wprowadzenie do AI i Uczenia Maszynowego: podstawowe pojęcia, rodzaje ML (nadzorowane, nienadzorowane, wzmocnione)</li>
+                    <li>Podstawy statystyki i algebry liniowej dla ML: niezbędne narzędzia matematyczne</li>
+                    <li>Python dla Data Science: NumPy (obliczenia numeryczne), Pandas (analiza i manipulacja danymi)</li>
+                    <li>Wizualizacja danych: Matplotlib, Seaborn (tworzenie wykresów i wizualizacji)</li>
+                    <li>Wstęp do Uczenia Nadzorowanego: regresja liniowa i logistyczna, podstawy klasyfikacji</li>
+                    <li>Zaawansowane Uczenie Nadzorowane: drzewa decyzyjne, lasy losowe, maszyny wektorów nośnych (SVM)</li>
+                    <li>Wprowadzenie do Uczenia Nienadzorowanego: klasteryzacja (K-Means), redukcja wymiarowości (PCA)</li>
+                    <li>Wprowadzenie do Sieci Neuronowych i Deep Learning: architektura sieci, wsteczna propagacja, frameworki (TensorFlow/Keras, PyTorch)</li>
+                    <li>Przetwarzanie Języka Naturalnego (NLP) - podstawy: tokenizacja, wektoryzacja tekstu, analiza sentymentu</li>
+                    <li>Wykrywanie anomalii: identyfikacja nietypowych wzorców w danych</li>
+                    <li>Ewaluacja i optymalizacja modeli: metryki, walidacja krzyżowa, hyperparameter tuning</li>
+                    <li>Etyka w AI: bias, prywatność danych, odpowiedzialne wykorzystanie AI</li>
+                    <li>Projekt końcowy ML: budowa i wdrożenie własnego modelu uczenia maszynowego</li>
+                    <li>Praca z Jupyter Notebooks: interaktywne środowisko deweloperskie</li>
+                    <li>Wprowadzenie do cloud computing dla ML (np. Google Colab, AWS SageMaker)</li>
+                </ul>
+            </div>
+
+            <div class="course-target-learn">
+                <h3>Dla Kogo Jest Ten Kurs:</h3>
+                <p>
+                    Kurs jest idealny dla analityków danych, programistów, naukowców i wszystkich, którzy chcą wkroczyć w świat Sztucznej Inteligencji i Uczenia Maszynowego. Wymagana jest podstawowa znajomość programowania w Pythonie i chęć do nauki koncepcji matematycznych.
+                </p>
+                <h3>Czego Nauczysz Się na Kursie:</h3>
+                <ul class="learn-list">
+                    <li>Projektować i implementować algorytmy uczenia maszynowego.</li>
+                    <li>Analizować i przetwarzać dane w celu budowy modeli.</li>
+                    <li>Wizualizować dane i wyniki analiz.</li>
+                    <li>Wykorzystywać biblioteki takie jak TensorFlow, PyTorch, Scikit-learn.</li>
+                    <li>Zrozumieć podstawy działania sieci neuronowych.</li>
+                    <li>Ewaluować i optymalizować wydajność modeli AI.</li>
+                    <li>Stosować zasady etyki w projektach AI/ML.</li>
+                </ul>
+                <h3>Wykorzystywane technologie:</h3>
+                <div class="technologies-grid">
+                    <div class="technology-item"><i class="devicon-python-plain colored"></i><span>Python</span></div>
+                    <div class="technology-item"><i class="devicon-jupyter-plain colored"></i><span>Jupyter</span></div>
+                    <div class="technology-item"><i class="devicon-tensorflow-plain colored"></i><span>TensorFlow</span></div>
+                    <div class="technology-item"><i class="devicon-pytorch-plain colored"></i><span>PyTorch</span></div>
+                    <div class="technology-item"><i class="devicon-numpy-plain colored"></i><span>NumPy</span></div>
+                    <div class="technology-item"><i class="devicon-pandas-plain colored"></i><span>Pandas</span></div>
+                    <div class="technology-item"><i class="devicon-scikitlearn-plain colored"></i><span>Scikit-learn</span></div>
+                    <div class="technology-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>
+                    <div class="technology-item"><i class="devicon-github-original colored"></i><span>GitHub</span></div>
+                </div>
             </div>
         </div>
 
-    </section>
+        <div class="call-to-action text-center">
+            <p>Przekształć dane w inteligencję – rozpocznij kurs AI & ML Developer!</p>
+            {# Zmieniono akcję przycisku "Zapisz się teraz!" na przekierowanie do hire.html #}
+            <button class="btn" onclick="window.location.href='{{ url_for('hire') }}';">Zapisz się teraz!</button>
+        </div>
+    </main>
 
     <footer class="container">
-        <span class="blur"></span>
-        <span class="blur"></span>
         <div class="column">
             <div class="logo">
-                <img src="{{ url_for('static', filename='images/logo.png') }}">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo firmy">
             </div>
             <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -123,7 +141,7 @@
         <div class="column">
             <h4>Contact</h4>
             <a href="#">Contact Us</a>
-            <a href="#">Privicy Policy</a>
+            <a href="#">Privacy Policy</a>
             <a href="#">Terms & Conditions</a>
         </div>
         <div class="copyright">

@@ -25,75 +25,81 @@
 
     <div class="blur"></div>
 
-    <section class="container single-course-section">
-        <div class="course-header-hero">
-            <h1 class="header">Full Stack Developer</h1>
-            <span class="price-hero">Cena: 4000zł</span>
-            <p class="description-hero">
-                Ten kompleksowy kurs przygotuje Cię do tworzenia pełnych aplikacji webowych, od interfejsu użytkownika po logikę serwerową i bazy danych. Zdobędziesz wszechstronne umiejętności, które uczynią Cię niezależnym i poszukiwanym specjalistą na rynku IT.
-            </p>
-            <button class="btn">Zapisz się na kurs</button>
-        </div>
+    <section id="full-stack-course" class="container">
+        <h2 class="section-header text-center">Kurs Full Stack Developer</h2>
 
-        <div class="course-content-card">
-            <h2>Program Kursu:</h2>
-            <ul class="program-list">
-                <li>Wprowadzenie do programowania i środowiska deweloperskiego (Visual Studio Code, Git)</li>
-                <li>Podstawy i zaawansowane techniki HTML5: struktura semantyczna, formularze, multimedia</li>
-                <li>CSS3: selektory, model pudełkowy, Flexbox, Grid, RWD (Responsive Web Design), animacje i transformacje</li>
-                <li>JavaScript (ES6+): podstawy składni, manipulacja DOM, obsługa zdarzeń, praca z API (Fetch API, Promises, async/await)</li>
-                <li>Wprowadzenie do biblioteki React.js: komponenty, stan, propsy, cykl życia komponentu, routing (React Router)</li>
-                <li>Zarządzanie stanem w React (Context API, Redux - wprowadzenie)</li>
-                <li>Budowanie API w Pythonie z użyciem frameworków Flask i Django (RESTful APIs)</li>
-                <li>Obsługa baz danych SQL (MySQL, PostgreSQL): projektowanie schematów, relacje, zapytania CRUD, ORM (Object-Relational Mapping)</li>
-                <li>Obsługa baz danych NoSQL (MongoDB - wprowadzenie): podstawy, operacje CRUD</li>
-                <li>Autoryzacja i autentykacja użytkowników (JWT - JSON Web Tokens, sesje, OAuth - podstawy)</li>
-                <li>Systemy kontroli wersji (Git, GitHub): branching, merging, rozwiązywanie konfliktów</li>
-                <li>Wdrożenie aplikacji (Deployment): podstawy hostingu, Docker (wprowadzenie)</li>
-                <li>Testowanie aplikacji (unit tests, integration tests)</li>
-                <li>Rozbudowany projekt końcowy Full Stack, integrujący wszystkie zdobyte umiejętności</li>
-            </ul>
-
-            <h2>Dla Kogo Jest Ten Kurs:</h2>
-            <p>
-                Kurs jest przeznaczony dla osób aspirujących do roli wszechstronnych deweloperów, którzy chcą opanować zarówno tworzenie interfejsów użytkownika, jak i logiki serwerowej. Idealny dla początkujących z ambicjami, jak i dla deweloperów z doświadczeniem w jednej dziedzinie, którzy chcą poszerzyć swoje kompetencje do poziomu Full Stack.
-            </p>
-
-            <h2>Czego Nauczysz Się na Kursie:</h2>
-            <ul class="learn-list">
-                <li>Projektowanie i implementowanie responsywnych, interaktywnych interfejsów użytkownika.</li>
-                <li>Budowanie skalowalnych, bezpiecznych i wydajnych API.</li>
-                <li>Efektywne zarządzanie relacyjnymi i nierelacyjnymi bazami danych.</li>
-                <li>Wdrażanie pełnych aplikacji webowych do środowiska produkcyjnego.</li>
-                <li>Pracy z systemami kontroli wersji i w zespole deweloperskim.</li>
-                <li>Rozwiązywania problemów i debugowania aplikacji Full Stack.</li>
-                <li>Projektowania kompletnych rozwiązań programistycznych od początku do końca.</li>
-            </ul>
-
-            <h2>Wykorzystywane technologie:</h2>
-            <div class="technologies-grid">
-                <div class="technology-item"><i class="devicon-python-plain colored"></i><span>Python</span></div>
-                <div class="technology-item"><i class="devicon-flask-original colored"></i><span>Flask</span></div>
-                <div class="technology-item"><i class="devicon-django-plain colored"></i><span>Django</span></div>
-                <div class="technology-item"><i class="devicon-html5-plain colored"></i><span>HTML5</span></div>
-                <div class="technology-item"><i class="devicon-css3-plain colored"></i><span>CSS3</span></div>
-                <div class="technology-item"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div>
-                <div class="technology-item"><i class="devicon-tailwindcss-plain colored"></i><span>Tailwind CSS</span></div>
-                <div class="technology-item"><i class="devicon-react-original colored"></i><span>React</span></div>
-                <div class="technology-item"><i class="devicon-mysql-plain colored"></i><span>MySQL</span></div>
-                <div class="technology-item"><i class="devicon-postgresql-plain colored"></i><span>PostgreSQL</span></div>
-                <div class="technology-item"><i class="devicon-mongodb-plain colored"></i><span>MongoDB</span></div>
-                <div class="technology-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>
-                <div class="technology-item"><i class="devicon-github-original colored"></i><span>GitHub</span></div>
-                <div class="technology-item"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
+        <div class="course-details-wrapper">
+            <div class="course-main-info glass-card">
+                <h3 class="course-title">Full Stack Developer</h3>
+                <p class="course-description">Ten kompleksowy kurs przygotuje Cię do tworzenia pełnych aplikacji webowych, od interfejsu użytkownika po logikę serwerową i bazy danych. Zdobędziesz wszechstronne umiejętności, które uczynią Cię niezależnym i poszukiwanym specjalistą na rynku IT.</p>
+                <div class="course-price-area">
+                    <span class="price">4000zł</span>
+                    {# Zmieniono akcję przycisku "Zapisz się teraz!" na przekierowanie do hire.html #}
+                    <button class="btn" onclick="window.location.href='{{ url_for('hire') }}';">Zapisz się teraz!</button>
+                </div>
+                <div class="technologies-used">
+                    <h4>Wykorzystywane technologie:</h4>
+                    <div class="tech-tags-grid">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Flask</span>
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Tailwind CSS</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">MongoDB</span>
+                        <span class="tech-tag">Git</span>
+                        <span class="tech-tag">GitHub</span>
+                        <span class="tech-tag">Docker</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="cta-bottom">
-                <p>Nie czekaj! Rozpocznij swoją podróż do kariery Full Stack Developera już dziś.</p>
-                <button class="btn">Zapisz się teraz!</button>
+            <div class="course-program-info glass-card">
+                <h3>Program Kursu:</h3>
+                <ul class="program-list">
+                    <li>Wprowadzenie do programowania i środowiska deweloperskiego (Visual Studio Code, Git)</li>
+                    <li>Podstawy i zaawansowane techniki HTML5: struktura semantyczna, formularze, multimedia</li>
+                    <li>CSS3: selektory, model pudełkowy, Flexbox, Grid, RWD (Responsive Web Design), animacje i transformacje</li>
+                    <li>JavaScript (ES6+): podstawy składni, manipulacja DOM, obsługa zdarzeń, praca z API (Fetch API, Promises, async/await)</li>
+                    <li>Wprowadzenie do biblioteki React.js: komponenty, stan, propsy, cykl życia komponentu, routing (React Router)</li>
+                    <li>Zarządzanie stanem w React (Context API, Redux - wprowadzenie)</li>
+                    <li>Budowanie API w Pythonie z użyciem frameworków Flask i Django (RESTful APIs)</li>
+                    <li>Obsługa baz danych SQL (MySQL, PostgreSQL): projektowanie schematów, relacje, zapytania CRUD, ORM (Object-Relational Mapping)</li>
+                    <li>Obsługa baz danych NoSQL (MongoDB - wprowadzenie): podstawy, operacje CRUD</li>
+                    <li>Autoryzacja i autentykacja użytkowników (JWT - JSON Web Tokens, sesje, OAuth - podstawy)</li>
+                    <li>Systemy kontroli wersji (Git, GitHub): branching, merging, rozwiązywanie konfliktów</li>
+                    <li>Wdrożenie aplikacji (Deployment): podstawy hostingu, Docker (wprowadzenie)</li>
+                    <li>Testowanie aplikacji (unit tests, integration tests)</li>
+                    <li>Rozbudowany projekt końcowy Full Stack, integrujący wszystkie zdobyte umiejętności</li>
+                </ul>
+            </div>
+
+            <div class="course-target-learn glass-card">
+                <h3>Dla Kogo Jest Ten Kurs:</h3>
+                <p>Kurs jest przeznaczony dla osób aspirujących do roli wszechstronnych deweloperów, którzy chcą opanować zarówno tworzenie interfejsów użytkownika, jak i logiki serwerowej. Idealny dla początkujących z ambicjami, jak i dla deweloperów z doświadczeniem w jednej dziedzinie, którzy chcą poszerzyć swoje kompetencje do poziomu Full Stack.</p>
+
+                <h3>Czego Nauczysz Się na Kursie:</h3>
+                <ul class="learn-list">
+                    <li>Projektowanie i implementowanie responsywnych, interaktywnych interfejsów użytkownika.</li>
+                    <li>Budowanie skalowalnych, bezpiecznych i wydajnych API.</li>
+                    <li>Efektywne zarządzanie relacyjnymi i nierelacyjnymi bazami danych.</li>
+                    <li>Wdrażanie pełnych aplikacji webowych do środowiska produkcyjnego.</li>
+                    <li>Pracy z systemami kontroli wersji i w zespole deweloperskim.</li>
+                    <li>Rozwiązywania problemów i debugowania aplikacji Full Stack.</li>
+                    <li>Projektowania kompletnych rozwiązań programistycznych od początku do końca.</li>
+                </ul>
             </div>
         </div>
 
+        <div class="call-to-action text-center">
+            <p>Nie czekaj! Rozpocznij swoją podróż do kariery Full Stack Developera już dziś.</p>
+            {# Zmieniono akcję przycisku "Zapisz się teraz!" na przekierowanie do hire.html #}
+            <a href="{{ url_for('hire') }}" class="btn enroll-btn"><i class="ri-arrow-right-line"></i> Zapisz się teraz!</a>
+        </div>
     </section>
 
     <footer class="container">
