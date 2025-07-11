@@ -7,13 +7,38 @@ from functools import wraps
 
 import os
 
+# --- WAŻNE: Dodajemy bibliotekę dotenv do ładowania zmiennych środowiskowych lokalnie ---
+# W środowisku produkcyjnym (np. na Render.com) to nie będzie potrzebne, bo Render sam wczyta zmienne.
+# Ale lokalnie pomoże to ukryć wrażliwe dane.
+# Pamiętaj, że musisz ją zainstalować: pipenv install python-dotenv
+try:
+    from dotenv import load_dotenv
+    load_dotenv() # Ładuje zmienne z pliku .env, jeśli istnieje
+except ImportError:
+    # Ignoruj, jeśli dotenv nie jest zainstalowane (np. na produkcji lub w środowisku bez pliku .env)
+    pass
+
+
 app = Flask(__name__)
 
-# Konfiguracja bazy danych SQLite
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.instance_path, 'site.db')
+# --- KONFIGURACJA APLIKACJI ---
+
+# 1. Konfiguracja bazy danych
+# Lokalnie używamy SQLite, ale na produkcji (Render) użyjemy PostgreSQL.
+# Render udostępnia URL do bazy danych w zmiennej środowiskowej 'DATABASE_URL'.
+# Używamy os.environ.get(), aby dynamicznie pobierać ten URL.
+# Jeśli 'DATABASE_URL' nie jest ustawione (czyli lokalnie), używamy domyślnej ścieżki do SQLite.
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    'DATABASE_URL',
+    'sqlite:///' + os.path.join(app.instance_path, 'site.db')
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# ZMIEN TO NA SWÓJ SEKRETNY KLUCZ! Użyj czegoś bezpiecznego, np. os.urandom(24).hex()
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your_super_secret_key_change_me_in_production_xyz123')
+
+# 2. Sekretny klucz dla Flask
+# BARDZO WAŻNE: Na produkcji (Render) ustaw 'SECRET_KEY' jako zmienną środowiskową!
+# Ta domyślna wartość jest tylko dla developmentu. Używamy os.urandom(24).hex()
+# do generowania losowego, bezpiecznego klucza programistycznie, jeśli zmienna nie jest ustawiona.
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', os.urandom(24).hex())
 
 # Utwórz folder 'instance' jeśli nie istnieje (potrzebne dla SQLite w app.instance_path)
 if not os.path.exists(app.instance_path):
@@ -30,119 +55,129 @@ def init_db_and_data():
         if not User.query.first(): # Sprawdź, czy są jacyś użytkownicy
             print("Dodawanie przykładowych danych...")
 
-            admin_email = "grzegorzgladysz2204@gmail.com"
-            admin_password = "Lego2012"
+            # --- WAŻNE: POBIERANIE HASŁA I EMAILA ADMINA ZE ZMIENNYCH ŚRODOWISKOWYCH ---
+            # To są zmienne, które ustawisz w pliku .env lokalnie
+            # i na Render.com w sekcji Environment Variables.
+            admin_email = os.environ.get('ADMIN_EMAIL')
+            admin_password = os.environ.get('ADMIN_PASSWORD')
 
-            admin_user = User(username='admin', email=admin_email, lessons_balance=100, role='admin')
-            admin_user.password_hash = generate_password_hash(admin_password) # Użyj generate_password_hash
-            db.session.add(admin_user)
-            db.session.commit() # Zatwierdź admina, aby otrzymał ID
+            # Sprawdź, czy zmienne środowiskowe dla admina zostały ustawione
+            if not admin_email or not admin_password:
+                print("--- BŁĄD: Nie ustawiono ADMIN_EMAIL lub ADMIN_PASSWORD w zmiennych środowiskowych! ---")
+                print("Nie dodano użytkownika admina. Ustaw je w .env (lokalnie) i na Render.com.")
+                # Nie zwracamy, aby reszta danych kursów mogła się dodać, jeśli to tylko problem z adminem.
+                # Ale admin nie zostanie dodany.
+            else:
+                admin_user = User(username='admin', email=admin_email, lessons_balance=100, role='admin')
+                admin_user.password_hash = generate_password_hash(admin_password) # Użyj generate_password_hash
+                db.session.add(admin_user)
+                db.session.commit() # Zatwierdź admina, aby otrzymał ID
 
-            # --- Definiowanie Kursów ---
-            courses_data = [
-                {
-                    'name': 'Python Dev',
-                    'description': 'Kompleksowy kurs programowania w Pythonie od podstaw.',
-                    'gradient_class': 'course-gradient-python',
-                    'modules': [
-                        {'name': 'Moduł 1: Podstawy Pythona', 'gradient_class': 'module-gradient-1', 'lessons_count': 4},
-                        {'name': 'Moduł 2: Struktury Danych', 'gradient_class': 'module-gradient-2', 'lessons_count': 4},
-                        {'name': 'Moduł 3: Funkcje i Moduły', 'gradient_class': 'module-gradient-3', 'lessons_count': 4},
-                        {'name': 'Moduł 4: Programowanie Obiektowe', 'gradient_class': 'module-gradient-4', 'lessons_count': 4},
-                        {'name': 'Moduł 5: Obsługa Plików i Wyjątków', 'gradient_class': 'module-gradient-5', 'lessons_count': 4},
-                        {'name': 'Moduł 6: Web Scraping i API', 'gradient_class': 'module-gradient-6', 'lessons_count': 4},
-                        {'name': 'Moduł 7: Bazy Danych z Pythonem', 'gradient_class': 'module-gradient-7', 'lessons_count': 4},
-                        {'name': 'Moduł 8: Wprowadzenie do Flask', 'gradient_class': 'module-gradient-8', 'lessons_count': 4}
-                    ]
-                },
-                {
-                    'name': 'Full Stack',
-                    'description': 'Kompleksowy kurs tworzenia pełnych aplikacji webowych.',
-                    'gradient_class': 'course-gradient-fullstack',
-                    'modules': [
-                        {'name': 'FS Moduł 1: Wprowadzenie do Frontend', 'gradient_class': 'module-gradient-fullstack-1', 'lessons_count': 4},
-                        {'name': 'FS Moduł 2: CSS Zaawansowany', 'gradient_class': 'module-gradient-fullstack-2', 'lessons_count': 4},
-                        {'name': 'FS Moduł 3: JavaScript ES6+', 'gradient_class': 'module-gradient-fullstack-3', 'lessons_count': 4},
-                        {'name': 'FS Moduł 4: React.js Podstawy', 'gradient_class': 'module-gradient-fullstack-4', 'lessons_count': 4},
-                        {'name': 'FS Moduł 5: Node.js i Express', 'gradient_class': 'module-gradient-fullstack-5', 'lessons_count': 4},
-                        {'name': 'FS Moduł 6: Bazy Danych NoSQL', 'gradient_class': 'module-gradient-fullstack-6', 'lessons_count': 4},
-                        {'name': 'FS Moduł 7: RESTful API', 'gradient_class': 'module-gradient-fullstack-7', 'lessons_count': 4},
-                        {'name': 'FS Moduł 8: Deployment i CI/CD', 'gradient_class': 'module-gradient-fullstack-8', 'lessons_count': 4}
-                    ]
-                },
-                {
-                    'name': 'AI & ML Dev',
-                    'description': 'Kurs wprowadzający do sztucznej inteligencji i uczenia maszynowego.',
-                    'gradient_class': 'course-gradient-aiml',
-                    'modules': [
-                        {'name': 'AI/ML Moduł 1: Wprowadzenie do AI/ML', 'gradient_class': 'module-gradient-aiml-1', 'lessons_count': 4},
-                        {'name': 'AI/ML Moduł 2: Podstawy Pythona dla ML', 'gradient_class': 'module-gradient-aiml-2', 'lessons_count': 4},
-                        {'name': 'AI/ML Moduł 3: Statystyka i Prawdopodobieństwo', 'gradient_class': 'module-gradient-aiml-3', 'lessons_count': 4},
-                        {'name': 'AI/ML Moduł 4: Uczenie Nadzorowane', 'gradient_class': 'module-gradient-aiml-4', 'lessons_count': 4},
-                        {'name': 'AI/ML Moduł 5: Uczenie Nienadzorowane', 'gradient_class': 'module-gradient-aiml-5', 'lessons_count': 4},
-                        {'name': 'AI/ML Moduł 6: Sieci Neuronowe i Deep Learning', 'gradient_class': 'module-gradient-aiml-6', 'lessons_count': 4},
-                        {'name': 'AI/ML Moduł 7: Przetwarzanie Języka Naturalnego (NLP)', 'gradient_class': 'module-gradient-aiml-7', 'lessons_count': 4},
-                        {'name': 'AI/ML Moduł 8: Wizja Komputerowa', 'gradient_class': 'module-gradient-aiml-8', 'lessons_count': 4}
-                    ]
-                },
-                {
-                    'name': 'Frontend Dev',
-                    'description': 'Kurs skupiający się na tworzeniu interfejsów użytkownika.',
-                    'gradient_class': 'course-gradient-frontend',
-                    'modules': [
-                        {'name': 'FE Moduł 1: HTML5 i CSS3', 'gradient_class': 'module-gradient-frontend-1', 'lessons_count': 4},
-                        {'name': 'FE Moduł 2: Responsywny Design', 'gradient_class': 'module-gradient-frontend-2', 'lessons_count': 4},
-                        {'name': 'FE Moduł 3: Zaawansowany CSS i Animacje', 'gradient_class': 'module-gradient-frontend-3', 'lessons_count': 4},
-                        {'name': 'FE Moduł 4: JavaScript od Podstaw', 'gradient_class': 'module-gradient-frontend-4', 'lessons_count': 4},
-                        {'name': 'FE Moduł 5: DOM Manipulation', 'gradient_class': 'module-gradient-frontend-5', 'lessons_count': 4},
-                        {'name': 'FE Moduł 6: Asynchroniczny JavaScript', 'gradient_class': 'module-gradient-frontend-6', 'lessons_count': 4},
-                        {'name': 'FE Moduł 7: React Podstawy', 'gradient_class': 'module-gradient-frontend-7', 'lessons_count': 4},
-                        {'name': 'FE Moduł 8: Narzędzia Frontendowe', 'gradient_class': 'module-gradient-frontend-8', 'lessons_count': 4}
-                    ]
-                },
-            ]
+                # --- Reszta kodu do dodawania danych kursów pozostaje bez zmian ---
+                courses_data = [
+                    {
+                        'name': 'Python Dev',
+                        'description': 'Kompleksowy kurs programowania w Pythonie od podstaw.',
+                        'gradient_class': 'course-gradient-python',
+                        'modules': [
+                            {'name': 'Moduł 1: Podstawy Pythona', 'gradient_class': 'module-gradient-1', 'lessons_count': 4},
+                            {'name': 'Moduł 2: Struktury Danych', 'gradient_class': 'module-gradient-2', 'lessons_count': 4},
+                            {'name': 'Moduł 3: Funkcje i Moduły', 'gradient_class': 'module-gradient-3', 'lessons_count': 4},
+                            {'name': 'Moduł 4: Programowanie Obiektowe', 'gradient_class': 'module-gradient-4', 'lessons_count': 4},
+                            {'name': 'Moduł 5: Obsługa Plików i Wyjątków', 'gradient_class': 'module-gradient-5', 'lessons_count': 4},
+                            {'name': 'Moduł 6: Web Scraping i API', 'gradient_class': 'module-gradient-6', 'lessons_count': 4},
+                            {'name': 'Moduł 7: Bazy Danych z Pythonem', 'gradient_class': 'module-gradient-7', 'lessons_count': 4},
+                            {'name': 'Moduł 8: Wprowadzenie do Flask', 'gradient_class': 'module-gradient-8', 'lessons_count': 4}
+                        ]
+                    },
+                    {
+                        'name': 'Full Stack',
+                        'description': 'Kompleksowy kurs tworzenia pełnych aplikacji webowych.',
+                        'gradient_class': 'course-gradient-fullstack',
+                        'modules': [
+                            {'name': 'FS Moduł 1: Wprowadzenie do Frontend', 'gradient_class': 'module-gradient-fullstack-1', 'lessons_count': 4},
+                            {'name': 'FS Moduł 2: CSS Zaawansowany', 'gradient_class': 'module-gradient-fullstack-2', 'lessons_count': 4},
+                            {'name': 'FS Moduł 3: JavaScript ES6+', 'gradient_class': 'module-gradient-fullstack-3', 'lessons_count': 4},
+                            {'name': 'FS Moduł 4: React.js Podstawy', 'gradient_class': 'module-gradient-fullstack-4', 'lessons_count': 4},
+                            {'name': 'FS Moduł 5: Node.js i Express', 'gradient_class': 'module-gradient-fullstack-5', 'lessons_count': 4},
+                            {'name': 'FS Moduł 6: Bazy Danych NoSQL', 'gradient_class': 'module-gradient-fullstack-6', 'lessons_count': 4},
+                            {'name': 'FS Moduł 7: RESTful API', 'gradient_class': 'module-gradient-fullstack-7', 'lessons_count': 4},
+                            {'name': 'FS Moduł 8: Deployment i CI/CD', 'gradient_class': 'module-gradient-fullstack-8', 'lessons_count': 4}
+                        ]
+                    },
+                    {
+                        'name': 'AI & ML Dev',
+                        'description': 'Kurs wprowadzający do sztucznej inteligencji i uczenia maszynowego.',
+                        'gradient_class': 'course-gradient-aiml',
+                        'modules': [
+                            {'name': 'AI/ML Moduł 1: Wprowadzenie do AI/ML', 'gradient_class': 'module-gradient-aiml-1', 'lessons_count': 4},
+                            {'name': 'AI/ML Moduł 2: Podstawy Pythona dla ML', 'gradient_class': 'module-gradient-aiml-2', 'lessons_count': 4},
+                            {'name': 'AI/ML Moduł 3: Statystyka i Prawdopodobieństwo', 'gradient_class': 'module-gradient-aiml-3', 'lessons_count': 4},
+                            {'name': 'AI/ML Moduł 4: Uczenie Nadzorowane', 'gradient_class': 'module-gradient-aiml-4', 'lessons_count': 4},
+                            {'name': 'AI/ML Moduł 5: Uczenie Nienadzorowane', 'gradient_class': 'module-gradient-aiml-5', 'lessons_count': 4},
+                            {'name': 'AI/ML Moduł 6: Sieci Neuronowe i Deep Learning', 'gradient_class': 'module-gradient-aiml-6', 'lessons_count': 4},
+                            {'name': 'AI/ML Moduł 7: Przetwarzanie Języka Naturalnego (NLP)', 'gradient_class': 'module-gradient-aiml-7', 'lessons_count': 4},
+                            {'name': 'AI/ML Moduł 8: Wizja Komputerowa', 'gradient_class': 'module-gradient-aiml-8', 'lessons_count': 4}
+                        ]
+                    },
+                    {
+                        'name': 'Frontend Dev',
+                        'description': 'Kurs skupiający się na tworzeniu interfejsów użytkownika.',
+                        'gradient_class': 'course-gradient-frontend',
+                        'modules': [
+                            {'name': 'FE Moduł 1: HTML5 i CSS3', 'gradient_class': 'module-gradient-frontend-1', 'lessons_count': 4},
+                            {'name': 'FE Moduł 2: Responsywny Design', 'gradient_class': 'module-gradient-frontend-2', 'lessons_count': 4},
+                            {'name': 'FE Moduł 3: Zaawansowany CSS i Animacje', 'gradient_class': 'module-gradient-frontend-3', 'lessons_count': 4},
+                            {'name': 'FE Moduł 4: JavaScript od Podstaw', 'gradient_class': 'module-gradient-frontend-4', 'lessons_count': 4},
+                            {'name': 'FE Moduł 5: DOM Manipulation', 'gradient_class': 'module-gradient-frontend-5', 'lessons_count': 4},
+                            {'name': 'FE Moduł 6: Asynchroniczny JavaScript', 'gradient_class': 'module-gradient-frontend-6', 'lessons_count': 4},
+                            {'name': 'FE Moduł 7: React Podstawy', 'gradient_class': 'module-gradient-frontend-7', 'lessons_count': 4},
+                            {'name': 'FE Moduł 8: Narzędzia Frontendowe', 'gradient_class': 'module-gradient-frontend-8', 'lessons_count': 4}
+                        ]
+                    },
+                ]
 
-            all_courses_in_db = []
-            for c_data in courses_data:
-                total_lessons_in_course = sum(m['lessons_count'] for m in c_data['modules'])
-                course = Course(
-                    name=c_data['name'],
-                    description=c_data['description'],
-                    gradient_class=c_data['gradient_class'],
-                    total_lessons=total_lessons_in_course # Ustawiamy total_lessons dla kursu
-                )
-                db.session.add(course)
-                db.session.commit() # Zatwierdź kurs, aby otrzymał ID
-                all_courses_in_db.append(course)
-
-                for i, m_data in enumerate(c_data['modules']):
-                    module = Module(
-                        course_id=course.id,
-                        name=m_data['name'], # Używamy 'name' dla modułu
-                        order=i + 1,
-                        total_lessons=m_data['lessons_count'], # Ustawiamy total_lessons dla modułu
-                        gradient_class=m_data['gradient_class']
+                all_courses_in_db = []
+                for c_data in courses_data:
+                    total_lessons_in_course = sum(m['lessons_count'] for m in c_data['modules'])
+                    course = Course(
+                        name=c_data['name'],
+                        description=c_data['description'],
+                        gradient_class=c_data['gradient_class'],
+                        total_lessons=total_lessons_in_course # Ustawiamy total_lessons dla kursu
                     )
-                    db.session.add(module)
-                    db.session.commit() # Zatwierdź moduł, aby otrzymał ID
+                    db.session.add(course)
+                    db.session.commit() # Zatwierdź kurs, aby otrzymał ID
+                    all_courses_in_db.append(course)
 
-                    # Dodaj lekcje do każdego modułu
-                    for j in range(1, m_data['lessons_count'] + 1):
-                        lesson = Lesson(
-                            module_id=module.id,
-                            name=f'Lekcja {module.order}.{j}: Temat Lekcji {j}',
-                            content=f'To jest treść lekcji {module.order}.{j} dla modułu "{module.name}" w kursie "{course.name}".',
-                            order=j
+                    for i, m_data in enumerate(c_data['modules']):
+                        module = Module(
+                            course_id=course.id,
+                            name=m_data['name'], # Używamy 'name' dla modułu
+                            order=i + 1,
+                            total_lessons=m_data['lessons_count'], # Ustawiamy total_lessons dla modułu
+                            gradient_class=m_data['gradient_class']
                         )
-                        db.session.add(lesson)
-            db.session.commit() # Zatwierdź wszystkie lekcje i moduły na raz
+                        db.session.add(module)
+                        db.session.commit() # Zatwierdź moduł, aby otrzymał ID
 
-            # Przypisz wszystkie kursy do użytkownika admina
-            for course_obj in all_courses_in_db:
-                user_course_access = UserCourseAccess(user_id=admin_user.id, course_id=course_obj.id, lessons_completed=0)
-                db.session.add(user_course_access)
-            db.session.commit()
-            print("Przykładowe dane dodane.")
+                        # Dodaj lekcje do każdego modułu
+                        for j in range(1, m_data['lessons_count'] + 1):
+                            lesson = Lesson(
+                                module_id=module.id,
+                                name=f'Lekcja {module.order}.{j}: Temat Lekcji {j}',
+                                content=f'To jest treść lekcji {module.order}.{j} dla modułu "{module.name}" w kursie "{course.name}".',
+                                order=j
+                            )
+                            db.session.add(lesson)
+                db.session.commit() # Zatwierdź wszystkie lekcje i moduły na raz
+
+                # Przypisz wszystkie kursy do użytkownika admina
+                for course_obj in all_courses_in_db:
+                    user_course_access = UserCourseAccess(user_id=admin_user.id, course_id=course_obj.id, lessons_completed=0)
+                    db.session.add(user_course_access)
+                db.session.commit()
+                print("Przykładowe dane dodane.")
         else:
             print("Baza danych już zawiera dane. Jeśli chcesz ją zresetować, usuń plik 'site.db' w folderze 'instance'.")
 
@@ -199,41 +234,6 @@ def login():
         else:
             flash('Nieprawidłowa nazwa użytkownika lub hasło.', 'error')
     return render_template('login.html')
-    if 'user_id' in session:
-        return redirect(url_for('learn'))
-
-    if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-
-        if not username or not email or not password:
-            flash('Wszystkie pola są wymagane!', 'error')
-            return render_template('register.html')
-
-        existing_user = User.query.filter_by(username=username).first()
-        existing_email = User.query.filter_by(email=email).first()
-
-        if existing_user:
-            flash('Nazwa użytkownika jest już zajęta.', 'error')
-        elif existing_email:
-            flash('Ten adres e-mail jest już zarejestrowany.', 'error')
-        else:
-            new_user = User(username=username, email=email, role='user') # Nowi użytkownicy domyślnie mają rolę 'user'
-            new_user.password_hash = generate_password_hash(password)
-            db.session.add(new_user)
-            db.session.commit()
-
-            # Przypisanie wszystkich kursów nowemu użytkownikowi (możesz to zmienić na konkretne kursy)
-            all_courses = Course.query.all()
-            for course_obj in all_courses:
-                user_course_access = UserCourseAccess(user_id=new_user.id, course_id=course_obj.id, lessons_completed=0)
-                db.session.add(user_course_access)
-            db.session.commit()
-
-            flash('Konto utworzone pomyślnie! Możesz się zalogować.', 'success')
-            return redirect(url_for('login'))
-    return render_template('register.html')
 
 # Wylogowanie
 @app.route('/logout')
@@ -442,9 +442,9 @@ def admin_dashboard():
     total_courses = Course.query.count()
     total_lessons = Lesson.query.count()
     return render_template('admin/dashboard.html',
-                           total_users=total_users,
-                           total_courses=total_courses,
-                           total_lessons=total_lessons)
+                            total_users=total_users,
+                            total_courses=total_courses,
+                            total_lessons=total_lessons)
 
 # --- Zarządzanie Użytkownikami ---
 @app.route('/admin/users')
@@ -528,9 +528,9 @@ def admin_assign_course_to_user(user_id):
         return redirect(url_for('admin_assign_course_to_user', user_id=user.id))
 
     return render_template('admin/assign_course_to_user.html',
-                           user=user,
-                           all_courses=all_courses,
-                           user_assigned_course_ids=user_assigned_course_ids)
+                            user=user,
+                            all_courses=all_courses,
+                            user_assigned_course_ids=user_assigned_course_ids)
 
 @app.route('/admin/users/revoke_course/<int:user_id>/<int:course_id>', methods=['POST'])
 @admin_required
@@ -798,5 +798,26 @@ def enroll_course(course_name):
 if __name__ == '__main__':
     # Ta sekcja zostanie uruchomiona tylko wtedy, gdy plik main.py jest uruchamiany bezpośrednio
     # a nie importowany jako moduł.
-    init_db_and_data() # Wywołanie funkcji do inicjalizacji bazy danych i dodania danych
-    app.run(debug=True) # Uruchom aplikację w trybie debugowania
+
+    # --- WAŻNE: WŁĄCZAMY init_db_and_data TYLKO NA LOKALNYM DEVELOPMENTIE ---
+    # Na produkcji (Render.com) nie chcesz, aby to uruchamiało się za każdym razem,
+    # gdy aplikacja startuje, bo to mogłoby nadpisać dane lub spowodować błędy.
+    # Używamy zmiennej środowiskowej FLASK_ENV do kontroli.
+    # Na Renderze ustaw FLASK_ENV na 'production'.
+    with app.app_context():
+        if os.environ.get('FLASK_ENV') != 'production':
+             init_db_and_data()
+        else:
+            # Na produkcji, upewnij się, że tabele są tworzone (jeśli jeszcze nie istnieją)
+            # ale bez dodawania przykładowych danych, aby nie nadpisywać.
+            # Zwykle to robi się przez narzędzia do migracji bazy danych (np. Flask-Migrate).
+            db.create_all()
+            print("Aplikacja uruchomiona w trybie produkcyjnym. Baza danych sprawdzona/utworzona.")
+
+
+    # --- WAŻNE: DEBUG=TRUE TYLKO DLA DEVELOPMENTU ---
+    # Nigdy nie uruchamiaj aplikacji na produkcji z debug=True!
+    # Na Renderze aplikacja będzie uruchamiana przez Gunicorn, który zarządza procesami,
+    # więc ten blok 'if __name__ == "__main__":' i tak nie będzie używany do uruchomienia serwera.
+    # Ale dla pewności, zmieniamy debug na dynamiczny.
+    app.run(debug=os.environ.get('FLASK_ENV') != 'production') # debug=False na produkcji

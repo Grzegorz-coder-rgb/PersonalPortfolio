@@ -1,0 +1,21 @@
+# Ignoruj pliki środowiskowe
+.env
+
+# Ignoruj folder z bazą danych SQLite (jeśli używasz)
+instance/site.db
+
+# Ignoruj folder środowiska wirtualnego Pipenv
+.venv/
+
+# Ignoruj pliki cache Pythona
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignoruj pliki specyficzne dla systemów operacyjnych
+.DS_Store # macOS
+Thumbs.db # Windows
+
+# Ignoruj pliki Pipenv
+Pipfile.lock # Możesz to odkomentować, jeśli chcesz śledzić Pipfile.lock w repozytorium
