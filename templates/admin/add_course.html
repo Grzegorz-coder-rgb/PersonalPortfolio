@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodaj Kurs - Panel Admina</title>
+    <style>
+        /* Podstawowe style dla body */
+        body {
+            font-family: 'Inter', sans-serif; /* Użycie czcionki Inter */
+            background-color: #f0f2f5; /* Jasnoszare tło */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Minimalna wysokość na całą wysokość widoku */
+            padding-top: 40px; /* Odstęp od góry */
+            padding-bottom: 40px; /* Odstęp od dołu */
+        }
+
+        /* Styl dla głównego kontenera formularza */
+        .form-container {
+            background-color: #ffffff; /* Białe tło */
+            padding: 32px; /* Wewnętrzny odstęp */
+            border-radius: 8px; /* Zaokrąglone rogi */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Delikatny cień */
+            width: 100%;
+            max-width: 448px; /* Maksymalna szerokość */
+            box-sizing: border-box; /* Model pudełkowy */
+        }
+
+        /* Styl dla nagłówka */
+        .form-title {
+            font-size: 2rem; /* Rozmiar czcionki 3xl */
+            font-weight: bold; /* Pogrubienie */
+            color: #1f2937; /* Ciemnoszary kolor tekstu (gray-800) */
+            margin-bottom: 24px; /* Margines dolny */
+            text-align: center; /* Wyśrodkowanie tekstu */
+        }
+
+        /* Style dla wiadomości flash */
+        .flash-messages-container {
+            margin-bottom: 24px; /* Margines dolny */
+        }
+        .flash-message {
+            padding: 12px; /* Wewnętrzny odstęp */
+            margin-bottom: 16px; /* Margines dolny */
+            border-radius: 6px; /* Zaokrąglone rogi */
+            font-size: 0.875rem; /* Rozmiar czcionki sm */
+        }
+        .flash-success {
+            background-color: #d1fae5; /* Zielony 100 */
+            color: #065f46; /* Zielony 800 */
+        }
+        .flash-danger {
+            background-color: #fee2e2; /* Czerwony 100 */
+            color: #991b1b; /* Czerwony 800 */
+        }
+        .flash-info {
+            background-color: #dbeafe; /* Niebieski 100 */
+            color: #1e40af; /* Niebieski 800 */
+        }
+        .flash-warning {
+            background-color: #fffbeb; /* Żółty 100 */
+            color: #92400e; /* Żółty 800 */
+        }
+
+        /* Styl dla formularza i jego elementów */
+        .form-group {
+            margin-bottom: 16px; /* Odstęp między grupami pól */
+        }
+        .form-label {
+            display: block; /* Element blokowy */
+            font-size: 0.875rem; /* Rozmiar czcionki sm */
+            font-weight: 500; /* Pogrubienie medium */
+            color: #374151; /* Ciemnoszary kolor tekstu (gray-700) */
+            margin-bottom: 4px; /* Margines dolny */
+        }
+        .form-input,
+        .form-textarea,
+        .form-select { /* Dodano .form-select */
+            width: 100%; /* Pełna szerokość */
+            padding: 10px 16px; /* Wewnętrzny odstęp */
+            border: 1px solid #d1d5db; /* Szara ramka (gray-300) */
+            border-radius: 6px; /* Zaokrąglone rogi */
+            box-sizing: border-box; /* Model pudełkowy */
+            outline: none; /* Usuń domyślne obramowanie focusa */
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; /* Płynne przejścia */
+        }
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus { /* Dodano .form-select */
+            border-color: #3b82f6; /* Niebieska ramka po focusie (blue-500) */
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); /* Cień po focusie */
+        }
+        .form-textarea {
+            resize: vertical; /* Pozwól na zmianę rozmiaru w pionie */
+        }
+        .form-help-text {
+            font-size: 0.75rem; /* Rozmiar czcionki xs */
+            color: #6b7280; /* Szary kolor tekstu (gray-500) */
+            margin-top: 4px; /* Margines górny */
+        }
+
+        /* Style dla przycisków */
+        .button-group {
+            display: flex; /* Układ flexbox */
+            justify-content: space-between; /* Rozłożenie elementów na boki */
+            align-items: center; /* Wyśrodkowanie w pionie */
+            margin-top: 24px; /* Margines górny */
+        }
+        .btn {
+            font-weight: bold; /* Pogrubienie */
+            padding: 8px 16px; /* Wewnętrzny odstęp */
+            border-radius: 6px; /* Zaokrąglone rogi */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Delikatny cień */
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Płynne przejścia */
+            text-align: center; /* Wyśrodkowanie tekstu */
+            flex-grow: 1; /* Rozciągnij, aby wypełnić dostępną przestrzeń */
+            text-decoration: none; /* Usuń podkreślenie dla linków */
+        }
+        .btn-primary {
+            background-color: #2563eb; /* Niebieski 600 */
+            color: #ffffff; /* Biały tekst */
+            margin-right: 8px; /* Margines po prawej */
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8; /* Niebieski 700 */
+        }
+        .btn-secondary {
+            background-color: #d1d5db; /* Szary 300 */
+            color: #1f2937; /* Ciemnoszary tekst (gray-800) */
+            margin-left: 8px; /* Margines po lewej */
+        }
+        .btn-secondary:hover {
+            background-color: #9ca3af; /* Szary 400 */
+        }
+
+        /* --- Przykładowe klasy gradientów --- */
+        /* Możesz dostosować te kolory i kierunki gradientów */
+        .course-gradient-default {
+            /* Domyślny, neutralny gradient */
+            background: linear-gradient(to right, #a7bfe8, #6195ed);
+            color: white; /* Tekst na jasnym tle */
+        }
+
+        .course-gradient-blue-purple {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+        }
+
+        .course-gradient-green-yellow {
+            background: linear-gradient(to right, #a1ffce, #faffd1);
+            color: #333; /* Ciemniejszy tekst na jasnym tle */
+        }
+
+        .course-gradient-red-orange {
+            background: linear-gradient(to right, #ff4e50, #fc913a);
+            color: white;
+        }
+
+        .course-gradient-gray-dark {
+            background: linear-gradient(to right, #434343, #000000);
+            color: white;
+        }
+
+        .course-gradient-pink-purple {
+            background: linear-gradient(to right, #ee9ca7, #ffdde1);
+            color: #333;
+        }
+
+        .course-gradient-teal-blue {
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-title">Dodaj Nowy Kurs</h1>
+
+        <!-- Wiadomości Flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages-container">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('admin_add_course') }}" method="POST">
+            <div class="form-group">
+                <label for="name" class="form-label">Nazwa Kursu:</label>
+                <input type="text" id="name" name="name" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="description" class="form-label">Opis:</label>
+                <textarea id="description" name="description" rows="4" class="form-textarea" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="gradient_class" class="form-label">Wybierz Gradient Kursu:</label>
+                <select id="gradient_class" name="gradient_class" class="form-select">
+                    <option value="course-gradient-default">Domyślny (Niebiesko-Szary)</option>
+                    <option value="course-gradient-blue-purple">Niebiesko-Fioletowy</option>
+                    <option value="course-gradient-green-yellow">Zielono-Żółty</option>
+                    <option value="course-gradient-red-orange">Czerwono-Pomarańczowy</option>
+                    <option value="course-gradient-gray-dark">Ciemnoszary</option>
+                    <option value="course-gradient-pink-purple">Różowo-Fioletowy</option>
+                    <option value="course-gradient-teal-blue">Turkusowo-Niebieski</option>
+                    <!-- Dodaj więcej opcji gradientów tutaj -->
+                </select>
+                <p class="form-help-text">Wybierz predefiniowaną klasę gradientu dla kursu.</p>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">Dodaj Kurs</button>
+                <a href="{{ url_for('admin_courses') }}" class="btn btn-secondary">Anuluj</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
