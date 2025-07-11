@@ -1,1461 +1,798 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap');
-/* Import ikon Remixicon, jeśli używasz. Jeśli używasz Font Awesome, zmień link. */
-@import url('https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css');
+/* Import czcionek Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap");
 
-/* --- Zmienne kolorów dla Dark Theme --- */
+/* === Zmienne CSS (Custom Properties) === */
 :root {
-    --dark-bg-primary: #000; /* Twoje tło */
-    --dark-bg-secondary: #1c1f2b; /* Tło dla kart/sekcji */
-    --dark-accent-blue: #0044ff; /* Twój przycisk */
-    --dark-accent-purple: #5e3bee; /* Twój główny akcent */
-    --text-light: #ccc; /* Twój tekst przycisku */
-    --text-primary: #fff; /* Twój główny tekst */
-    --text-muted: rgba(255, 255, 255, 0.7); /* Nowy - dla opisów */
-    --gradient-start: #ff4545;
-    --gradient-mid1: #00ff99;
-    --gradient-mid2: #006aff;
-    --gradient-mid3: #ff0095;
-    --border-thickness: 3px; /* Standardowa grubość ramki */
-    --blur-intensity-light: 1.5rem; /* Mniejsze rozmycie dla subtelniejszego glow */
-    --blur-intensity-strong: 8rem; /* Mocniejsze rozmycie dla większych sekcji */
+    /* Kolory podstawowe */
+    --clr-bg-dark: #0f0f1a; /* Bardzo ciemne tło */
+    --clr-text-primary: #f0f0f0; /* Jasny tekst główny */
+    --clr-text-secondary: #c0c0c0; /* Lekko ciemniejszy tekst */
+    --clr-accent-blue: #007bff; /* Główny akcent niebieski */
+    --clr-accent-purple: #8a2be2; /* Główny akcent fioletowy */
+    --clr-accent-green: #28a745; /* Akcent zielony (np. dla sukcesu) */
+    --clr-button-bg: #8a2be2; /* Tło przycisku */
+    --clr-button-hover: #7b24cc; /* Tło przycisku hover */
+
+    /* Kolory Glassmorphism */
+    --clr-glass-bg: rgba(255, 255, 255, 0.05); /* Tło przezroczyste */
+    --clr-glass-border: rgba(255, 255, 255, 0.1); /* Ramka przezroczysta */
+
+    /* Cienie */
+    --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.2);
+    --shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.4);
+
+    /* Promienie zaokrąglenia */
+    --border-radius-sm: 8px;
+    --border-radius-md: 15px;
+    --border-radius-lg: 25px;
+
+    /* Odstępy */
+    --padding-sm: 1rem;
+    --padding-md: 2rem;
+    --padding-lg: 3rem;
+
+    /* Animacja gradientu */
+    --angle: 0deg;
+    --border-thickness: 3px; /* Grubość animowanej ramki */
+    --animation-speed-gradient: 15s; /* Szybkość animacji ramki */
+    --blur-strength: 10px; /* Siła rozmycia glassmorphism */
 }
 
-/* === Globalne resety i podstawowe style === */
+/* === Podstawowe style i reset === */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif; /* Poppins jako domyślny */
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-
-li {
-    list-style-type: none;
 }
 
 body {
-    background: var(--dark-bg-primary);
-    color: var(--text-primary);
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--clr-bg-dark);
+    color: var(--clr-text-primary);
     line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden; /* Zapobiega poziomym paskom przewijania */
+    overflow-x: hidden; /* Zapobiega poziomemu scrollowaniu */
+    position: relative; /* Dla tła rozmycia, jeśli będzie */
 }
 
 a {
     text-decoration: none;
-    color: var(--text-primary);
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* === Kontener ogólny === */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--padding-md);
+}
+
+/* === Nagłówki sekcji === */
+.section-header {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 3rem;
+    text-align: center;
+    background: linear-gradient(90deg, var(--clr-accent-blue), var(--clr-accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent; /* Fallback for older browsers */
+    line-height: 1.2;
+}
+
+/* === Przyciski === */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    background-color: var(--clr-button-bg);
+    color: var(--clr-text-primary);
+    cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: var(--shadow-light);
+    white-space: nowrap; /* Zapobiega zawijaniu tekstu */
 }
 
-/* Zmodyfikowany hover dla globalnych linków - mniejszy font-size */
-a:hover {
-    color: var(--dark-accent-purple);
-    /* Używamy transform zamiast font-size dla płynniejszej animacji i zachowania layoutu */
+.btn:hover {
+    background-color: var(--clr-button-hover);
     transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* === Nawigacja (Navbar) === */
+/* === Nawigacja === */
 nav {
+    display: flex;
+    justify-content: center; /* Wyśrodkuj elementy nawigacji */
+    align-items: center;
+    padding: 1rem 0;
+    background-color: rgba(0, 0, 0, 0.4); /* Lekko przezroczyste tło nawigacji */
+    backdrop-filter: blur(var(--blur-strength));
+    -webkit-backdrop-filter: blur(var(--blur-strength));
     position: sticky;
     top: 0;
-    z-index: 100; /* Wyższy z-index, aby była zawsze na wierzchu */
-    font-weight: 700;
-    background: var(--dark-bg-secondary);
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Dodany cień */
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 nav ul {
     display: flex;
+    gap: 2rem;
     align-items: center;
-    justify-content: center;
-    gap: 2.5rem; /* Zwiększony odstęp dla lepszej estetyki */
-    padding: 1.5rem 0; /* Mniejszy padding dla bardziej kompaktowej nawigacji */
-    margin: 0; /* Usunięcie marginesu, który wpływał na layout */
 }
 
 nav ul li a {
+    font-size: 1.05rem;
+    font-weight: 500;
+    padding: 0.5rem 0;
     position: relative;
-    padding-bottom: 0.5rem; /* Zmniejszony padding-bottom */
-    color: var(--text-primary) !important;
-    font-size: 1.1rem; /* Ustalony domyślny rozmiar */
-    transition: color 0.3s ease, font-size 0.3s ease;
-}
-
-nav ul li a:hover {
-    color: var(--dark-accent-purple) !important;
-    font-size: 1.2rem !important; /* Mniejsze powiększenie na hover */
-    transform: none; /* Reset globalnego transform */
+    transition: color 0.3s ease;
 }
 
 nav ul li a::after {
-    content: "";
-    position: absolute;
-    height: 3px; /* Grubsza linia */
-    width: 0;
-    bottom: 0;
-    left: 50%; /* Zaczynamy od środka */
-    transform: translateX(-50%); /* Centrujemy linię */
-    background-color: var(--dark-accent-purple);
-    transition: width 0.3s ease; /* Płynne przejście szerokości */
-}
-
-nav ul li a:hover::after {
-    width: 100%; /* Rozciąga się na 100% */
-    animation: none; /* Usuwamy fadeIn, bo nie jest odpowiedni do podkreślenia */
-}
-
-/* === Globalne klasy pomocnicze === */
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 5rem 2rem; /* Twój oryginalny padding */
-    position: relative;
-    z-index: 1; /* Upewnienie się, że zawartość jest nad ramką */
-    border-radius: 10px; /* Dodane, dla spójności z ramkami */
-    background-color: var(--dark-bg-secondary); /* Dodane, aby było widać tło */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Lekki cień */
-}
-
-.btn {
-    display: inline-block; /* Zapewnia, że padding działa poprawnie */
-    font-size: 1rem;
-    font-weight: 600; /* Dodana grubość czcionki */
-    color: var(--text-light);
-    padding: 1rem 1.5rem;
-    border-radius: 5px;
-    background-color: var(--dark-accent-blue);
-    cursor: pointer;
-    border: none; /* Usuń domyślną ramkę */
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 68, 255, 0.4); /* Subtelny cień */
-}
-
-.btn:hover {
-    border-radius: 10px;
-    border: 2px solid var(--text-primary); /* Twój pomysł na ramkę */
-    padding: 1.1rem 1.6rem; /* Delikatne powiększenie */
-    background-color: var(--dark-accent-purple); /* Zmiana koloru */
-    transform: translateY(-3px); /* Efekt uniesienia */
-    box-shadow: 0 6px 20px rgba(94, 59, 238, 0.5); /* Zwiększony cień */
-}
-
-/* === Blur dla całej strony/sekcji (jeśli potrzebne) === */
-.blur {
-    position: absolute;
-    box-shadow: 0 0 1000px 50px var(--dark-accent-blue);
-    z-index: -2;
-}
-
-/* === Header (Sekcja główna) === */
-header {
-    position: relative;
-    padding: 5rem 2rem 2rem; /* Dopasowany padding */
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-    gap: 3rem; /* Zwiększony odstęp */
-    max-width: 1200px;
-    margin: auto;
-    min-height: calc(100vh - 100px); /* Dopasuj do wysokości viewportu minus nawigacja/stopka */
-}
-
-header .content h1 {
-    font-size: 4rem; /* Większy nagłówek */
-    color: var(--text-primary);
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
-}
-
-header .content p {
-    font-size: 1.1rem;
-    color: var(--text-muted);
-    margin-bottom: 2rem;
-}
-
-header .image img {
-    max-width: 100%; /* Zapewnia responsywność */
-    height: auto;
-    object-fit: cover;
-    border-radius: 15px; /* Zaokrąglone rogi dla obrazka */
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6); /* Cień dla obrazka */
-}
-
-/* === Sekcja 'About' === */
-#about {
-    padding: 5rem 2rem;
-    max-width: 1000px;
-    margin: auto;
-    text-align: center;
-}
-
-#about p {
-    font-size: 1.5rem;
-    width: 100%; /* Pełna szerokość w kontenerze */
-    max-width: 800px; /* Ograniczenie dla czytelności */
-    margin: 0 auto; /* Wyśrodkowanie */
-    color: var(--text-muted);
-}
-
-
-/* === Ujednolicone style kart z animowaną ramką === */
-
-/* Generalna klasa dla wszystkich elementów z animowaną ramką */
-.animated-border-card {
-    position: relative;
-    overflow: hidden; /* KLUCZOWE: Ukrywa części pseudoelementów poza obszarem */
-    z-index: 0; /* Zapewnij, że zawartość jest nad ramką */
-    border-radius: 10px;
-    background: var(--dark-bg-secondary);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Domyślne centrowanie */
-    justify-content: center; /* Domyślne centrowanie */
-    text-align: center; /* Domyślne centrowanie */
-    color: var(--text-primary);
-}
-
-/* Prawdziwe obramowanie gradientowe */
-.animated-border-card::before,
-.animated-border-card::after {
     content: '';
     position: absolute;
-    top: 0;
     left: 0;
-    right: 0;
     bottom: 0;
-    background-image: conic-gradient(from var(--angle), var(--gradient-start), var(--gradient-mid1), var(--gradient-mid2), var(--gradient-mid3), var(--gradient-start));
-    z-index: -1;
-    border-radius: inherit; /* Dziedziczy border-radius z rodzica */
-    animation: spin 1.5s linear infinite;
-}
-
-.animated-border-card::before { /* Rozmycie (glow) */
-    filter: blur(var(--blur-intensity-light));
-    opacity: 0.7;
-}
-
-.animated-border-card::after { /* Ostra ramka */
-    /* Używamy padding-box, aby gradient był tłem, ale rysowany wewnątrz paddingu */
-    /* I transparentnej ramki, aby gradient był widoczny jako obramowanie */
-    background-clip: padding-box;
-    -webkit-background-clip: padding-box;
-    border: var(--border-thickness) solid transparent;
-}
-
-
-/* === Karta 'card-1' === */
-.card-1 {
-    /* Styles copied from .animated-border-card due to no @extend */
-    position: relative;
-    overflow: hidden;
-    z-index: 0;
-    border-radius: 10px;
-    background: var(--dark-bg-secondary);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--text-primary);
-    /* End copied styles */
-
-    margin: 100px auto;
-    width: 90%;
-    max-width: 600px;
-    min-height: 300px;
-    padding: 30px 50px;
-}
-
-/* Specific ::before and ::after for card-1 */
-.card-1::before,
-.card-1::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: conic-gradient(from var(--angle), var(--gradient-start), var(--gradient-mid1), var(--gradient-mid2), var(--gradient-mid3), var(--gradient-start));
-    z-index: -1;
-    border-radius: inherit;
-    animation: spin 1.5s linear infinite;
-}
-
-.card-1::before {
-    filter: blur(var(--blur-intensity-light));
-    opacity: 0.7;
-}
-
-.card-1::after {
-    background-clip: padding-box;
-    -webkit-background-clip: padding-box;
-    border: var(--border-thickness) solid transparent;
-}
-
-
-.card-1 h1 {
-    /* Zmieniamy pozycjonowanie, aby nagłówek był w naturalnym przepływie */
-    position: static;
-    font-size: 3rem;
-    color: var(--text-primary);
-    margin-bottom: 2rem; /* Odstęp od treści */
-    text-align: center;
-    width: auto; /* Nie ograniczamy szerokości dla nagłówka */
-}
-
-/* Linia pod nagłówkiem w card-1 h1 */
-.card-1 h1 span { /* Użyj span w HTML do tekstu, aby linia była pod nim */
-    position: relative;
-    display: inline-block; /* Aby ::after działało poprawnie */
-    padding-bottom: 0.5rem;
-}
-
-.card-1 h1 span::after {
-    content: "";
-    position: absolute;
-    height: 3px;
     width: 0;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--dark-accent-purple);
+    height: 2px;
+    background: linear-gradient(to right, var(--clr-accent-blue), var(--clr-accent-purple));
     transition: width 0.3s ease;
 }
 
-.card-1 h1:hover span::after {
+nav ul li a:hover::after {
     width: 100%;
-    animation: none; /* Usuń fadeIn, bo nie jest odpowiedni */
 }
 
-.card-1 h1:hover {
-    background-color: transparent; /* Brak tła na hover */
-    border-radius: 0;
-    font-size: 3rem; /* Brak powiększania fontu na hover dla nagłówka */
-    border: none;
-    margin-top: 0;
-    color: var(--dark-accent-purple); /* Zmiana koloru na hover */
+nav ul li a:hover {
+    color: var(--clr-accent-blue);
 }
 
-.card-1 .btn {
-    margin-top: 2rem;
+nav .btn {
+    margin-left: 2rem; /* Odstęp od ostatniego linku */
 }
 
-/* === Sekcja 'Offers' === */
-.offers {
-    max-width: 1200px; /* Kontrolujemy szerokość */
-    margin: auto;
-    padding: 5rem 2rem; /* Dodany padding */
-    display: flex;
-    align-items: stretch; /* Elementy rozciągają się na pełną wysokość */
-    justify-content: center;
-    gap: 3rem;
-    min-height: 600px; /* Minimalna wysokość, aby sekcja nie była za mała */
-}
 
-/* === Karta w 'Offers' (.card) === */
-.card {
-    /* Styles copied from .animated-border-card due to no @extend */
-    position: relative;
-    overflow: hidden;
-    z-index: 0;
-    border-radius: 10px;
-    background: var(--dark-bg-secondary);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--text-primary);
-    /* End copied styles */
-
-    width: 350px; /* Zwiększona szerokość dla lepszej czytelności */
-    height: 450px; /* Zwiększona wysokość */
-    padding: 2.5rem;
-    justify-content: space-between;
-}
-
-/* Specific ::before and ::after for card */
-.card::before,
-.card::after {
+/* === Efekt rozmycia tła (Blur) - jeśli używasz globalnie === */
+/* Jeśli "blur" jest elementem nakładającym się na tło, a nie tylko stylami */
+/* Zastąpi to Twoje puste divy blur */
+body::before {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: conic-gradient(from var(--angle), var(--gradient-start), var(--gradient-mid1), var(--gradient-mid2), var(--gradient-mid3), var(--gradient-start));
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top left, rgba(138, 43, 226, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at bottom right, rgba(0, 123, 255, 0.2) 0%, transparent 40%);
+    z-index: -2; /* Pod wszystkim */
+}
+
+
+/* === Glassmorphism Card (Ogólne style) === */
+.glass-card {
+    background-color: var(--clr-glass-bg);
+    border: 1px solid var(--clr-glass-border);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(var(--blur-strength));
+    -webkit-backdrop-filter: blur(var(--blur-strength)); /* Dla Safari */
+    box-shadow: var(--shadow-light);
+    position: relative; /* Dla animowanej ramki */
+    overflow: hidden; /* Ważne, aby gradient ramki nie wyjeżdżał */
+    z-index: 0; /* Ważne dla z-index pseudoelementów */
+    padding: 2.5rem; /* Domyślny padding dla kart */
+    margin-bottom: 3rem; /* Odstęp między kartami/sekcjami */
+}
+
+/* Animowana ramka dla glass-card */
+.glass-card::before,
+.glass-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    /* Domyślny gradient, który będzie nadpisywany przez specyficzne klasy kursów */
+    background: conic-gradient(from var(--angle),
+        #ff4545 0%, #00ff99 25%, #006aff 50%, #ff0095 75%, #ff4545 100%
+    );
     z-index: -1;
-    border-radius: inherit;
-    animation: spin 3s linear infinite; /* Wolniejsza animacja dla kart */
+    animation: spin var(--animation-speed-gradient) linear infinite;
+    transform-origin: center center; /* Ważne dla obrotu */
 }
 
-.card::before { /* Mniejsze rozmycie */
-    filter: blur(var(--blur-intensity-light));
-    opacity: 0.7;
+/* Pseudo-element do efektu rozmytej poświaty ramki */
+.glass-card::before {
+    filter: blur(var(--blur-strength)); /* Rozmycie gradientu */
+    opacity: 0.4; /* Przezroczystość dla efektu poświaty */
 }
 
-.card::after {
-    background-clip: padding-box;
-    -webkit-background-clip: padding-box;
-    border: var(--border-thickness) solid transparent;
+/* Pseudo-element do ostrej ramki (maskowanie) */
+.glass-card::after {
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: exclude; /* Dla Safari */
+    padding: var(--border-thickness); /* Tworzy ramkę */
+}
+
+/* Animacja obracania dla gradientu */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 
-.card h3,
-.card h4 {
-    font-size: 2rem;
-    text-align: center;
-    padding-bottom: 0.5rem; /* Zmniejszony padding */
-    color: var(--text-primary);
-    margin-top: 0; /* Upewnij się, że nie ma zbędnych marginesów */
+/* === Sekcje Szczegółów Kursu (dla pojedynczych stron) === */
+
+.course-detail-page-wrapper {
+    /* Używa już .glass-card, więc dziedziczy podstawowe style */
+    padding: 3rem 2.5rem; /* Większy padding dla głównej karty kursu */
+    margin-top: 3rem; /* Odstęp od nagłówka sekcji */
+    display: grid;
+    grid-template-columns: 1fr; /* Domyślnie jedna kolumna */
+    gap: 2.5rem; /* Odstępy między sekcjami wewnątrz karty */
 }
 
-.card h4 {
-    padding-bottom: 2rem; /* Odstęp pod ceną */
-    color: var(--dark-accent-purple); /* Kolor akcentu dla ceny */
-    font-size: 2.2rem; /* Większa cena */
+/* === Specyficzne gradienty dla poszczególnych kursów (nadpisują domyślny glass-card) === */
+
+/* Full Stack Developer (przykład - dostosuj, jeśli masz inny) */
+.course-gradient-fullstack::before, .course-gradient-fullstack::after {
+    background: conic-gradient(from var(--angle),
+        #6a82fb 0%, #fc5c7d 25%, #6a82fb 50%, #fc5c7d 75%, #6a82fb 100%
+    );
+}
+
+/* Frontend Developer: delikatny niebiesko-zielony */
+.course-gradient-frontend::before, .course-gradient-frontend::after {
+    background: conic-gradient(from var(--angle),
+        #2196F3 0%, #4CAF50 25%, #2196F3 50%, #4CAF50 75%, #2196F3 100%
+    );
+}
+
+/* Backend Developer: cieplejszy, żółto-pomarańczowy */
+.course-gradient-backend::before, .course-gradient-backend::after {
+    background: conic-gradient(from var(--angle),
+        #FFC107 0%, #FF5722 25%, #FFC107 50%, #FF5722 75%, #FFC107 100%
+    );
+}
+
+/* AI & ML Developer: fioletowo-różowy */
+.course-gradient-ai-ml::before, .course-gradient-ai-ml::after {
+    background: conic-gradient(from var(--angle),
+        #9C27B0 0%, #E91E63 25%, #9C27B0 50%, #E91E63 75%, #9C27B0 100%
+    );
+}
+
+/* --- Elementy wewnątrz course-detail-page-wrapper --- */
+
+.course-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
     font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--clr-accent-blue); /* Użyj jednego z kolorów akcentu */
+    text-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
 }
 
-.card p {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--text-muted);
-    text-align: left; /* Tekst wyrównany do lewej w karcie */
-    margin-bottom: 1rem;
-    flex-grow: 1; /* Pozwala paragrafom zająć dostępną przestrzeń */
+.course-description {
+    font-size: 1.15rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 2rem;
 }
 
-.card .btn {
-    align-self: center;
-    margin-top: 1.5rem; /* Odstęp od treści */
-    margin-bottom: 0;
-}
-
-/* === Nagłówek ogólny (np. dla sekcji Projects) === */
-.header {
-    text-align: center;
-    font-size: 3.5rem; /* Większy rozmiar */
-    padding-top: 5rem; /* Odstęp od góry */
-    padding-bottom: 2rem; /* Odstęp od dołu */
-    color: var(--text-primary);
-    font-weight: 700;
-}
-
-/* === Podnagłówek (Sub-header) === */
-.sub-header {
-    /* Styles copied from .animated-border-card due to no @extend */
-    position: relative;
-    overflow: hidden;
-    z-index: 0;
-    border-radius: 10px;
-    background: var(--dark-bg-secondary);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+.course-price-area {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--text-primary);
-    /* End copied styles */
-
-    margin: 50px auto; /* Centrowanie i mniejszy margines */
-    width: 90%;
-    max-width: 600px;
-    min-height: 250px; /* Mniejsza wysokość */
-    font-size: 1.3rem; /* Mniejszy font */
-    padding: 2.5rem; /* Mniejszy padding */
-    line-height: 1.6;
-    color: var(--text-muted);
-}
-
-/* Specific ::before and ::after for sub-header */
-.sub-header::before,
-.sub-header::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: conic-gradient(from var(--angle), var(--gradient-start), var(--gradient-mid1), var(--gradient-mid2), var(--gradient-mid3), var(--gradient-start));
-    z-index: -1;
-    border-radius: inherit;
-    animation: spin 1.5s linear infinite;
-}
-
-.sub-header::before {
-    filter: blur(var(--blur-intensity-light));
-    opacity: 0.7;
-}
-
-.sub-header::after {
-    background-clip: padding-box;
-    -webkit-background-clip: padding-box;
-    border: var(--border-thickness) solid transparent;
-}
-
-
-/* === Sekcja 'Projects' === */
-.projects {
-    /* Styles copied from .animated-border-card due to no @extend */
-    position: relative;
-    overflow: hidden;
-    z-index: 0;
-    border-radius: 10px;
-    background: var(--dark-bg-secondary);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--text-primary);
-    /* End copied styles */
-
-    margin: 5rem auto; /* Większy margines dla oddzielenia sekcji */
-    padding: 3rem; /* Ujednolicony padding */
-    height: auto; /* Kluczowe dla responsywności, usuwa stałą wysokość */
-    min-height: 800px; /* Minimalna wysokość, aby nie była za mała */
-    max-width: 1200px;
-    flex-direction: column;
-    justify-content: flex-start; /* Treść zaczyna się od góry */
-    align-items: center;
-    gap: 3rem; /* Odstęp między siatkami projektów */
-}
-
-/* Specific ::before and ::after for projects */
-.projects::before,
-.projects::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: conic-gradient(from var(--angle), var(--gradient-start), var(--gradient-mid1), var(--gradient-mid2), var(--gradient-mid3), var(--gradient-start));
-    z-index: -1;
-    border-radius: inherit;
-    animation: spin 4s linear infinite;
-}
-
-.projects::before {
-    filter: blur(var(--blur-intensity-strong)); /* Silniejsze rozmycie */
-    opacity: 1;
-}
-
-.projects::after {
-    background-clip: padding-box;
-    -webkit-background-clip: padding-box;
-    border: var(--border-thickness) solid transparent;
-}
-
-
-.projects .project-grid {
-    width: 100%; /* Siatka zajmuje całą szerokość rodzica */
-    display: flex;
-    flex-direction: column;
     gap: 2rem;
-    align-items: center; /* Centruj rzędy w siatce */
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap; /* Zezwól na zawijanie na małych ekranach */
 }
 
-.projects .project-grid .projects-top,
-.projects .project-grid .projects-bottom {
+.course-price-area .price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--clr-accent-purple);
+    text-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+}
+
+/* --- Technologie wykorzystywane (Tech Tags) --- */
+.technologies-used h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    color: var(--clr-text-primary);
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.technologies-used h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(to right, var(--clr-accent-purple), var(--clr-accent-blue));
+    border-radius: 1px;
+}
+
+.tech-tags-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    width: 100%; /* Wypełnia dostępną szerokość */
+    gap: 1rem;
 }
 
-.projects .project-grid .project-item {
-    background-color: var(--dark-bg-primary); /* Ciemniejsze tło dla elementów projektu */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Delikatna ramka */
-    width: 280px; /* Zwiększona szerokość dla lepszej treści */
-    height: 420px; /* Zwiększona wysokość */
-    border-radius: 10px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    text-align: left;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.projects .project-grid .project-item:hover {
-    transform: translateY(-5px);
-    border-color: var(--dark-accent-blue);
-    box-shadow: 0 6px 20px rgba(0, 68, 255, 0.6);
-}
-
-.projects .project-grid .project-item img {
-    width: 100%;
-    height: 180px; /* Stała wysokość dla obrazka w projekcie */
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
-
-.projects .project-grid h3 {
-    font-size: 1.4rem; /* Mniejszy nagłówek */
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-    background-color: transparent; /* Usuń tło z nagłówka */
-    width: auto; /* Automatyczna szerokość */
-    height: auto; /* Automatyczna wysokość */
-    padding: 0;
-    text-align: left; /* Wyrównanie do lewej */
-}
-
-.projects .project-grid p {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-    margin-bottom: 1rem;
-    flex-grow: 1; /* Wypełnij dostępną przestrzeń */
-}
-
-.projects .project-grid button {
-    align-self: center; /* Centruj przycisk w elemencie projektu */
-    position: static; /* Usuń pozycjonowanie absolutne */
-    left: auto;
-    transform: none;
-    margin-top: auto; /* Pchnij przycisk na dół */
-}
-
-/* === Sekcja 'Feedback' === */
-.feedback {
-    padding: 5rem 2rem; /* Ujednolicony padding */
-    max-width: 1200px;
-    margin: auto;
-    text-align: center;
-}
-
-.feedback .review {
-    /* Styles copied from .animated-border-card due to no @extend */
-    position: relative;
-    overflow: hidden;
-    z-index: 0;
-    border-radius: 10px;
-    background: var(--dark-bg-secondary);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--text-primary);
-    /* End copied styles */
-
-    font-size: 3rem;
-    padding: 2rem;
-    margin-bottom: 3rem; /* Zwiększony margines */
-    font-weight: 900;
-}
-
-/* Specific ::before and ::after for feedback .review */
-.feedback .review::before,
-.feedback .review::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: conic-gradient(from var(--angle), var(--gradient-start), var(--gradient-mid1), var(--gradient-mid2), var(--gradient-mid3), var(--gradient-start));
-    z-index: -1;
-    border-radius: inherit;
-    animation: spin 2.5s linear infinite;
-}
-
-.feedback .review::before {
-    filter: blur(var(--blur-intensity-light));
-    opacity: 0.7;
-}
-
-.feedback .review::after {
-    background-clip: padding-box;
-    -webkit-background-clip: padding-box;
-    border: var(--border-thickness) solid transparent;
-}
-
-
-.feedback .customers-feedback {
-    /* Styles copied from .animated-border-card due to no @extend */
-    position: relative;
-    overflow: hidden;
-    z-index: 0;
-    border-radius: 10px;
-    background: var(--dark-bg-secondary);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--text-primary);
-    /* End copied styles */
-
-    font-size: 2rem;
-    font-weight: 600;
-    padding: 1.5rem 2rem;
-    margin-bottom: 3rem; /* Odstęp od opinii */
-}
-
-/* Specific ::before and ::after for feedback .customers-feedback */
-.feedback .customers-feedback::before,
-.feedback .customers-feedback::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: conic-gradient(from var(--angle), var(--gradient-start), var(--gradient-mid1), var(--gradient-mid2), var(--gradient-mid3), var(--gradient-start));
-    z-index: -1;
-    border-radius: inherit;
-    animation: spin 2.5s linear infinite;
-}
-
-.feedback .customers-feedback::before {
-    filter: blur(var(--blur-intensity-light));
-    opacity: 0.7;
-}
-
-.feedback .customers-feedback::after {
-    background-clip: padding-box;
-    -webkit-background-clip: padding-box;
-    border: var(--border-thickness) solid transparent;
-}
-
-
-.feedback .customers {
-    margin-top: 5rem;
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap; /* Pozwala elementom zawijać się */
-    justify-content: center; /* Centruj elementy */
-}
-
-.feedback .customers .item {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem; /* Zmniejszony odstęp */
-    border: 2px solid var(--dark-accent-purple);
-    border-radius: 10px;
-    padding: 30px;
-    cursor: pointer;
+.tech-tag {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--border-radius-sm);
+    font-size: 0.9rem;
+    color: var(--clr-text-secondary);
+    font-weight: 500;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     transition: all 0.3s ease;
-    width: 100%;
-    max-width: 350px; /* Ograniczenie szerokości elementu opinii */
-    background-color: var(--dark-bg-secondary);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
-.feedback .customers .item .rating {
-    color: #1eff00;
-    font-size: 1.8rem; /* Mniejszy rozmiar */
+.tech-tag:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--clr-text-primary);
+    transform: translateY(-2px);
 }
 
-.feedback .customers .item:hover {
-    border-color: var(--dark-accent-blue);
-    transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(0, 68, 255, 0.5);
+/* --- Program Kursu / Dla kogo / Czego się nauczysz (Listy) --- */
+.course-program-info h3,
+.course-target-learn h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--clr-text-primary);
+    margin-top: 2.5rem; /* Odstęp od poprzedniej sekcji */
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    background: linear-gradient(90deg, var(--clr-accent-blue), var(--clr-accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent; /* Fallback */
 }
 
-.feedback .customers .item p {
-    line-height: 1.6; /* Lepsza czytelność */
-    font-size: 1.1rem;
-    color: var(--text-muted);
+.course-program-info h3::after,
+.course-target-learn h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px; /* Krótka linia pod nagłówkiem */
+    height: 2px;
+    background: linear-gradient(to right, var(--clr-accent-blue), var(--clr-accent-purple));
+    border-radius: 1px;
 }
 
-.feedback .customers .item .user {
+.program-list, .learn-list {
+    margin-top: 1rem;
+}
+
+.program-list li, .learn-list li {
+    position: relative;
+    padding-left: 2.2rem; /* Większy odstęp na ikonę */
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.5;
+}
+
+.program-list li::before, .learn-list li::before {
+    content: '\ea10'; /* Remixicon check-line icon */
+    font-family: 'remixicon' !important; /* Upewnij się, że używa Remixicon */
+    position: absolute;
+    left: 0;
+    color: var(--clr-accent-green); /* Użyj koloru akcentu */
+    font-size: 1.5rem; /* Większa ikona */
+    top: 0.1em; /* Lepsze pionowe wyrównanie */
+    line-height: 1;
+}
+
+.course-target-learn p {
+    font-size: 1.15rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+/* === Technologie (ikony Devicon) === */
+.technologies-grid {
     display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem; /* Większy odstęp dla lepszej czytelności */
+    margin-top: 1.5rem;
+    justify-content: flex-start; /* Domyślnie wyrównaj do lewej */
+}
+
+.technology-item {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 0.5rem;
+    padding: 1rem 1.2rem;
+    background-color: var(--clr-glass-bg); /* Lekko przezroczyste tło */
+    border: 1px solid var(--clr-glass-border);
+    border-radius: var(--border-radius-sm);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.feedback .customers .item .user img {
-    width: 50px; /* Większy awatar */
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid var(--dark-accent-purple); /* Ramka na awatarze */
+.technology-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.feedback .customers .item .user h5 {
-    font-size: 1rem; /* Większy rozmiar nazwy użytkownika */
+.technology-item i {
+    font-size: 3.5rem; /* Zwiększ rozmiar ikon Devicon */
+    line-height: 1; /* Popraw wyrównanie */
+}
+
+.technology-item span {
+    font-size: 1rem;
+    color: var(--clr-text-secondary);
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+/* === Sekcja Call To Action na dole strony === */
+.call-to-action {
+    text-align: center;
+    margin-top: 4rem;
+    padding: 3rem;
+    background-color: var(--clr-glass-bg);
+    border: 1px solid var(--clr-glass-border);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(var(--blur-strength));
+    -webkit-backdrop-filter: blur(var(--blur-strength));
+    box-shadow: var(--shadow-light);
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.call-to-action::before, .call-to-action::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from var(--angle),
+        var(--clr-accent-purple) 0%, var(--clr-accent-blue) 25%, var(--clr-accent-purple) 50%, var(--clr-accent-blue) 75%, var(--clr-accent-purple) 100%
+    );
+    z-index: -1;
+    animation: spin var(--animation-speed-gradient) linear infinite;
+}
+.call-to-action::before { filter: blur(var(--blur-strength)); opacity: 0.4; }
+.call-to-action::after {
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude; -webkit-mask-composite: exclude;
+    padding: var(--border-thickness);
+}
+
+.call-to-action p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
     font-weight: 600;
-    margin-bottom: 2px;
-    color: var(--text-primary);
-}
-
-.feedback .customers .item .user p {
-    font-size: 0.9rem; /* Większy rozmiar opisu */
-    color: var(--text-muted);
-    margin-bottom: 0; /* Usuń margines */
-}
-
-.feedback .customers .item #p2 { /* Specyficzny styl, jeśli potrzebny */
-    font-size: 0.8rem !important; /* Dostosowanie do skali */
+    color: var(--clr-text-primary);
+    margin-bottom: 2rem;
+    line-height: 1.4;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 /* === Stopka (Footer) === */
-.container {
-  padding: 5rem;
-  background-color: #1a1f2b;
-  margin: 0 auto;
-  max-width: 1200px; /* Rozważ użycie max-width dla lepszej responsywności */
-  display: flex;
-  gap: 2rem; /* Dodaje odstęp między kolumnami */
-  flex-wrap: wrap; /* Pozwala kolumnom zawijać się na mniejszych ekranach */
-  position: relative;
-}
-
-.container::after, .container::before{
-  content: '';
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  z-index: -1;
-  padding: 10px; /* Ten padding tworzy iluzję grubości ramki, jeśli tło elementu jest przezroczyste lub inne */
-  border-radius: 10px;
-  animation: spin 1s linear infinite; /* ***POPRAWKA: Dodano animację*** */
-}
-
-.container::before{
-  filter: blur(8rem);
-  opacity: 1;
-}
-
-.container .column {
-  flex-grow: 1; 
-  flex-basis: 200px; 
- 
-}
-
-.container .column h4 {
-  margin-bottom: 1rem; /* Odstęp pod nagłówkiem H4 */
-}
-
-.container .column h4{
-  cursor: pointer;
-}
-
-
-.container .column > a { 
-  display: block;
-  margin-bottom: 0.5rem; /* Odstęp między linkami w kolumnie */
-}
-
-.container .column > a:hover{
-  font-size: 1.5rem !important;
-}
-
-.container .column .socials{
-  font-size: 2rem;
-}
-
-footer .copyright{
-  position: absolute;
-  left: 34%;
-  top: 20rem;
-}
-
-footer .copyright:hover{
-  cursor: pointer;
-  color: #5e3bee;
-  background-color: #000;
-}
-
-/* === Animacje CSS === */
-@property --angle {
-    syntax: "<angle>";
-    initial-value: 0deg;
-    inherits: false;
-}
-
-@keyframes spin {
-    from {
-        --angle: 0deg;
-    }
-    to {
-        --angle: 360deg;
-    }
-}
-
-/* Animacja dla podkreślenia - oryginalna nazwa fadeIn może być myląca */
-@keyframes underline-grow {
-    from {
-        width: 0;
-    }
-    to {
-        width: 100%;
-    }
-}
-
-/* === DODANE STYLE DLA SEKCJI COURSES I KART KURSÓW === */
-
-#courses {
-    padding: 5rem 2rem; /* Spójny padding z .container */
-    display: flex;
-    flex-direction: column; /* Karty kursów jedna pod drugą */
-    align-items: center; /* Wyśrodkowanie kart */
-    gap: 3rem; /* Odstęp między kartami kursów */
-    max-width: 1200px; /* Ograniczenie szerokości tak jak inne kontenery */
-    margin: auto; /* Wyśrodkowanie całej sekcji */
-}
-
-.course-card {
-    /* Styles copied from .animated-border-card due to no @extend */
+footer {
     position: relative;
-    overflow: hidden;
-    z-index: 0;
-    border-radius: 10px;
-    background: var(--dark-bg-secondary);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding: 4rem var(--padding-md) 2rem;
+    margin-top: 5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: rgba(0, 0, 0, 0.3); /* Lekko ciemniejsze tło */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+}
+
+footer .column {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--text-primary);
-    /* End copied styles */
-
-    margin: 0 auto; /* Upewnij się, że karty są centrowane indywidualnie */
-    padding: 30px 50px; /* Spójny padding z card-1 */
-    width: 100%; /* Pełna szerokość w ramach #courses, ale ograniczymy ją max-width */
-    max-width: 800px; /* Maksymalna szerokość dla czytelności treści */
-    min-height: 400px; /* Minimalna wysokość, aby nie były zbyt małe */
-    align-items: flex-start; /* Tekst i elementy wyrównane do lewej */
-    justify-content: flex-start; /* Treść zaczyna się od góry */
-    gap: 10px; /* Domyślny odstęp między elementami w karcie */
-    text-align: left; /* Wyrównanie tekstu */
-    box-shadow: 0 0 20px rgba(0, 255, 153, 0.1); /* Lekki cień, spójny z paletą */
+    gap: 1rem;
 }
 
-/* Specific ::before and ::after for course-card */
-.course-card::after, .course-card::before{
+footer .column .logo img {
+    max-height: 50px;
+    margin-bottom: 1rem;
+}
+
+footer .column p {
+    color: var(--clr-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+footer .column h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--clr-text-primary);
+    margin-bottom: 0.8rem;
+    position: relative;
+}
+
+footer .column h4::after {
     content: '';
     position: absolute;
-    height: 100%;
-    width: 100%;
-    background-image: conic-gradient(from var(--angle), var(--gradient-start), var(--gradient-mid1), var(--gradient-mid2), var(--gradient-mid3), var(--gradient-start));
-    top: 50%;
-    left: 50%;
-    translate: -50% -50%;
-    z-index: -1;
-    border-radius: inherit;
-    animation: 3s spin linear infinite;
+    bottom: -5px;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(to right, var(--clr-accent-blue), var(--clr-accent-purple));
+    border-radius: 1px;
 }
 
-.course-card::before{
-    filter: blur(var(--blur-intensity-light));
-    opacity: 0.5;
+footer .column a {
+    color: var(--clr-text-secondary);
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
 }
 
-.course-card::after {
-    background-clip: padding-box;
-    -webkit-background-clip: padding-box;
-    border: var(--border-thickness) solid transparent;
+footer .column a:hover {
+    color: var(--clr-accent-blue);
 }
 
-
-.course-card h1 {
-    font-size: 2.8rem; /* Nieco mniejszy niż card-1 h1, bardziej proporcjonalny */
-    color: var(--dark-accent-purple);
-    margin-bottom: 10px;
-    text-align: center; /* Centrowanie nagłówka */
-    width: 100%; /* Rozciągnij na całą szerokość */
-}
-
-.course-card h1 strong { /* Styl dla ceny */
-    font-size: 1.6rem;
-    color: var(--text-primary);
-    display: block; /* Cena w nowej linii */
-    margin-top: 5px;
-    font-weight: 600;
-}
-
-.course-card p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.course-card h2 {
-    font-size: 1.6rem;
-    color: var(--text-light);
-    margin-top: 15px;
-    margin-bottom: 10px;
-    text-align: left;
-    width: 100%;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Delikatna linia oddzielająca */
-    padding-bottom: 5px;
-}
-
-.course-card .technology-item {
+footer .socials {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.1em;
-    margin-bottom: 5px;
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
-.course-card .technology-item i {
-    font-size: 1.8em; /* Rozmiar ikon technologii */
+footer .socials a {
+    font-size: 1.5rem;
+    color: var(--clr-text-secondary);
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
-
-/* === MEDIA QUERIES (RESPONSYWNOŚĆ) - POPRAWIONA I UJEDNOLICONA WERSJA === */
-
-/* === EKRANY PONIŻEJ 1200px === */
-@media (max-width: 1200px) {
-    .container,
-    .offers,
-    .projects,
-    .feedback,
-    footer .container {
-        max-width: 95%; /* Używamy procentów zamiast stałej wartości px */
-        width: 100%;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
-
-    .sub-header {
-        left: 50%;
-        transform: translateX(-50%);
-        margin: 50px auto;
-        width: 90%;
-        max-width: 600px;
-    }
-
-    footer .copyright {
-        position: relative;
-        left: auto;
-        top: auto;
-        text-align: center;
-        margin-top: 2rem;
-        width: 100%;
-    }
+footer .socials a:hover {
+    color: var(--clr-accent-blue);
+    transform: translateY(-3px);
 }
 
-/* === EKRANY PONIŻEJ 1024px (Tablety w orientacji poziomej) === */
-@media (max-width: 1024px) {
-    body {
-        font-size: 0.95rem;
-    }
+.copyright {
+    grid-column: 1 / -1; /* Rozciąga się na wszystkie kolumny */
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.85rem;
+    color: var(--clr-text-secondary);
+}
 
-    header {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding-top: 3rem;
-        padding-bottom: 2rem;
-        gap: 2rem;
+/* === Media Queries (Responsywność) === */
+@media (min-width: 992px) {
+    .course-detail-page-wrapper {
+        grid-template-columns: 2fr 1.5fr; /* Dwie kolumny: główna info + program */
     }
-
-    header .image {
-        grid-area: 1 / 1; /* Obrazek nad tekstem na małych ekranach */
+    .course-program-info {
+        grid-column: 2 / 3; /* Program w prawej kolumnie */
+        grid-row: 1 / 3; /* Rozciągnij program na 2 rzędy */
     }
-
-    header .content h1 {
-        font-size: 3rem;
+    .course-target-learn {
+        grid-column: 1 / 2; /* Dla kogo/Czego nauczysz się w lewej kolumnie pod info */
+        grid-row: 2 / 3;
     }
-
-    header .content p {
-        font-size: 1rem;
-    }
-
-    #about p {
-        font-size: 1.3rem;
-        padding: 0 1rem;
-    }
-
-    .offers {
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
-    }
-
-    .card {
-        width: 90%;
-        max-width: 380px;
-        height: auto; /* Pozwól karcie dostosować wysokość do zawartości */
-        min-height: 400px; /* Minimalna wysokość */
-    }
-
-    .projects .project-grid {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .projects .project-grid .projects-top,
-    .projects .project-grid .projects-bottom {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .projects .project-grid .project-item {
-        width: 90%;
-        max-width: 320px;
-        height: auto;
-        min-height: 400px;
-    }
-
-    .feedback .customers {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .feedback .customers .item {
-        width: 90%;
-        max-width: 380px;
-    }
-
-    footer .column {
-        align-items: center;
-        text-align: center;
-    }
-
-    footer .column .socials {
-        justify-content: center;
-    }
-
-    /* Dopasowania dla sekcji kursów */
-    #courses {
-        padding: 3rem 1rem;
-        gap: 2rem;
-    }
-
-    .course-card {
-        padding: 20px 30px;
-        min-height: 350px;
-        max-width: 95%; /* Pozwól karcie zajmować więcej miejsca na małych ekranach */
-    }
-
-    .course-card h1 {
-        font-size: 2rem;
-    }
-
-    .course-card h1 strong {
-        font-size: 1.4rem;
-    }
-
-    .course-card p {
-        font-size: 1rem;
-    }
-
-    .course-card h2 {
-        font-size: 1.4rem;
-    }
-
-    .course-card .technology-item {
-        font-size: 1em;
-    }
-
-    .course-card .technology-item i {
-        font-size: 1.6em;
+    .technologies-grid {
+        justify-content: flex-start; /* Wyrównaj do lewej na dużych ekranach */
     }
 }
 
-/* === EKRANY PONIŻEJ 768px (Tablety w orientacji pionowej i duże smartfony) === */
+
 @media (max-width: 768px) {
+    .container {
+        padding: var(--padding-sm);
+    }
+
+    .section-header {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+
     nav ul {
-        flex-direction: column;
-        gap: 1.5rem;
-        padding: 1rem 0;
+        flex-wrap: wrap; /* Pozwól linkom zawijać się */
+        justify-content: center;
+        gap: 1rem;
     }
-
-    nav ul li a {
-        font-size: 1rem;
-    }
-
-    nav ul li a:hover {
-        font-size: 1.1rem !important;
-    }
-
-    .header {
-        font-size: 3rem;
-        padding-top: 3rem;
-        padding-bottom: 1.5rem;
-    }
-
-    #about p {
-        font-size: 1.1rem;
-    }
-
-    .card-1 {
-        width: 95%;
-        padding: 20px 30px;
-        min-height: 250px;
-    }
-
-    .card-1 h1 {
-        font-size: 2.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .card-1 h1 span::after {
-        height: 2px;
-    }
-
-    .card {
-        padding: 2rem 1.5rem;
-        min-height: 350px;
-    }
-
-    .card h3, .card h4 {
-        font-size: 1.8rem;
-    }
-
-    .card h4 {
-        font-size: 2rem;
-    }
-
-    .card p {
-        font-size: 0.9rem;
-    }
-
-    .sub-header {
-        font-size: 1.1rem;
-        padding: 2rem;
-        min-height: 200px;
-    }
-
-    .feedback .review {
-        font-size: 2.5rem;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .feedback .customers-feedback {
-        font-size: 1.5rem;
-        padding: 1rem 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .feedback .customers .item {
-        padding: 20px;
-    }
-
-    .feedback .customers .item p {
-        font-size: 1rem;
-    }
-
-    footer {
-        padding-top: 3rem;
-    }
-
-    footer .container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    footer .column {
-        align-items: flex-start;
-        text-align: left;
-    }
-
-    footer .column h4 {
-        margin-bottom: 1rem;
-    }
-
-    footer .column .socials {
-        justify-content: flex-start;
-    }
-
-    .copyright {
-        padding: 1rem 1rem;
-        font-size: 0.75rem;
-    }
-
-    /* Dopasowania dla sekcji kursów */
-    .course-card {
-        padding: 15px 20px;
-        min-height: 300px;
-    }
-
-    .course-card h1 {
-        font-size: 1.8rem;
-    }
-
-    .course-card h1 strong {
-        font-size: 1.2rem;
-    }
-
-    .course-card p {
-        font-size: 0.95rem;
-    }
-
-    .course-card h2 {
-        font-size: 1.2rem;
-    }
-
-    .course-card .technology-item {
-        font-size: 0.9em;
-    }
-
-    .course-card .technology-item i {
-        font-size: 1.4em;
-    }
-}
-
-/* === EKRANY PONIŻEJ 480px (Małe smartfony) === */
-@media (max-width: 480px) {
-    header .content h1 {
-        font-size: 2.5rem;
-    }
-
-    header .content p {
-        font-size: 0.9rem;
+    nav .btn {
+        margin-left: 0;
+        margin-top: 1rem; /* Przycisk pod linkami */
+        width: 100%; /* Rozciągnij przycisk */
     }
 
     .btn {
-        padding: 0.8rem 1.2rem;
-        font-size: 0.9rem;
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
     }
 
-    .btn:hover {
-        padding: 0.9rem 1.3rem;
+    .glass-card {
+        padding: 1.5rem;
     }
 
-    .header {
-        font-size: 2.5rem;
-        padding-top: 2rem;
-        padding-bottom: 1rem;
+    .course-detail-page-wrapper {
+        grid-template-columns: 1fr; /* Zawsze jedna kolumna na mniejszych ekranach */
+        gap: 2rem;
+        padding: 2rem 1.5rem;
     }
 
-    .card-1 {
-        padding: 15px 20px;
-        min-height: 200px;
-    }
-
-    .card-1 h1 {
-        font-size: 2rem;
+    .course-title {
+        font-size: 2.2rem;
         margin-bottom: 1rem;
     }
 
-    .card-1 h1 span::after {
-        height: 2px;
+    .course-description {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
     }
 
-    .card {
-        padding: 2rem 1.5rem;
-        min-height: 350px;
+    .course-price-area {
+        flex-direction: column; /* Ułóż cenę i przycisk w kolumnie */
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
     }
 
-    .card h3, .card h4 {
-        font-size: 1.8rem;
+    .course-price-area .price {
+        font-size: 2.5rem;
     }
 
-    .card h4 {
-        font-size: 2rem;
+    .technologies-used h4 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
     }
 
-    .card p {
-        font-size: 0.9rem;
+    .tech-tags-grid {
+        gap: 0.8rem;
     }
 
-    .sub-header {
-        font-size: 1.1rem;
-        padding: 1.5rem;
-        min-height: 180px;
-    }
-
-    .projects .project-grid .project-item {
-        padding: 1rem;
-        min-height: 380px;
-    }
-
-    .projects .project-grid h3 {
-        font-size: 1.2rem;
-    }
-
-    .projects .project-grid p {
+    .tech-tag {
         font-size: 0.85rem;
+        padding: 0.5rem 1rem;
     }
 
-    .feedback .review {
-        font-size: 2rem;
+    .course-program-info h3,
+    .course-target-learn h3 {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
     }
 
-    .feedback .customers-feedback {
+    .program-list li, .learn-list li {
+        font-size: 0.95rem;
+        padding-left: 1.8rem;
+        margin-bottom: 0.8rem;
+    }
+    .program-list li::before, .learn-list li::before {
         font-size: 1.3rem;
     }
 
-    .feedback .customers .item .rating {
+    .technologies-grid {
+        gap: 1rem;
+    }
+    .technology-item {
+        padding: 0.8rem 1rem;
+    }
+    .technology-item i {
+        font-size: 3rem;
+    }
+    .technology-item span {
+        font-size: 0.9rem;
+    }
+
+    .call-to-action {
+        padding: 2rem;
+        margin-top: 3rem;
+    }
+    .call-to-action p {
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+    }
+
+    footer {
+        grid-template-columns: 1fr; /* Jedna kolumna w stopce */
+        padding: 3rem var(--padding-sm) 1.5rem;
+        text-align: center;
+    }
+    footer .column {
+        align-items: center; /* Wyśrodkuj kolumny */
+    }
+    footer .column h4 {
+        margin-top: 1.5rem;
+    }
+    footer .column h4::after {
+        left: 50%;
+        transform: translateX(-50%); /* Wyśrodkuj podkreślenie */
+    }
+    footer .socials {
+        justify-content: center; /* Wyśrodkuj ikony społecznościowe */
+    }
+    .copyright {
+        padding-top: 1rem;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-header {
+        font-size: 2rem;
+    }
+
+    .course-title {
+        font-size: 1.8rem;
+    }
+
+    .course-price-area .price {
+        font-size: 2rem;
+    }
+
+    .course-program-info h3,
+    .course-target-learn h3 {
         font-size: 1.5rem;
     }
 
-    .feedback .customers .item p {
+    .program-list li, .learn-list li {
         font-size: 0.9rem;
+        padding-left: 1.5rem;
+    }
+    .program-list li::before, .learn-list li::before {
+        font-size: 1.1rem;
     }
 
-    .feedback .customers .item .user h5 {
-        font-size: 0.9rem;
+    .technology-item i {
+        font-size: 2.5rem;
     }
-
-    .feedback .customers .item .user p {
+    .technology-item span {
         font-size: 0.8rem;
     }
 
-    footer .column h4 {
+    .call-to-action p {
         font-size: 1.2rem;
     }
+}
 
-    footer .column > a {
-        font-size: 0.85rem;
-    }
-
-    footer .column .socials a {
-        font-size: 1.5rem;
-    }
-
-    /* Dopasowania dla sekcji kursów */
-    .course-card {
-        padding: 10px 15px;
-        min-height: 280px;
-    }
-
-    .course-card h1 {
-        font-size: 1.6rem;
-    }
-
-    .course-card h1 strong {
-        font-size: 1.1rem;
-    }
-
-    .course-card p {
-        font-size: 0.9em;
-    }
-
-    .course-card h2 {
-        font-size: 1.1rem;
-    }
-
-    .course-card .technology-item {
-        font-size: 0.85em;
-    }
-
-    .course-card .technology-item i {
-        font-size: 1.3em;
-    }
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+body::before {
+    background-size: 200% 200%;
+    animation: gradientAnimation 15s ease infinite;
 }
